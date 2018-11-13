@@ -1,0 +1,23 @@
+{
+  "name": "is2019-vse-electron",
+  "version": "1.0.0",
+  "description": "Testing the previous idea for a JS-powered VSE as an Electron app in order to be able to implement more features.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HoWingYip/is2019-vse-electron.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HoWingYip/is2019-vse-electron/issues"
+  },
+  "homepage": "https://github.com/HoWingYip/is2019-vse-electron#readme",
+  "devDependencies": {
+    "electron": "^3.0.9"
+  }
+}
