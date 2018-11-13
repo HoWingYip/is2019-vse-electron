@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="w3.css"/>
+  <script src="scripts.js"></script>
+  <title>Editor UI Demo</title>
+</head>
+<body>
+  <div class="video-panel w3-round">
+    <video id="source-video" src="/assets/PostingLetter.MOV" height="75%" width="75%" preload="auto">Video not displayed.</video>
+    <div class="controls">
+      <div class="timer" id="sourceCurrentTime">0:00</div>
+      <input type="range" class="scrubber" id="sourceScrubber" value="0">
+      <div class="timer" id="sourceDuration"></div>
+      <br>
+      <img src="icons/pngs/SkipToStart.png" alt="Skip to start" class="control-button" width="27px" height="25px"
+      id="sourceSkipToStart" onclick="sourceSkipToStart()" />
+      <img src="icons/pngs/Rewind.png" alt="Rewind" class="control-button" width="50px" height="25px"
+      id="sourceRewind" onclick="sourceSkipTenBack()" />
+      <img src="icons/pngs/Play.png" alt="Play" class="control-button" width="25px" height="25px" 
+      id="sourcePlayPause" onclick="sourcePlayPause()" />
+      <img src="icons/pngs/FastForward.png" alt="Rewind" class="control-button" width="50px" height="25px"
+      id="sourceFastForward" onclick="sourceSkipTenForward()" />
+      <img src="icons/pngs/SkipToEnd.png" alt="Skip to start" class="control-button" width="27px" height="25px"
+      id="sourceSkipToEnd" onclick="sourceSkipToEnd()" />
+    </div>
+  </div>
+  <div class="video-panel-second w3-round">
+    <video id="timeline-video" src="/assets/ScoopingIntoBin.MOV" height="75%" width="75%" preload="auto">Video not displayed.</video>
+    <div class="controls">
+      <div class="timer" id="timelineCurrentTime">0:00</div>
+      <input type="range" class="scrubber" id="timelineScrubber" value="0">
+      <div class="timer" id="timelineDuration"></div>
+      <br>
+      <img src="icons/pngs/SkipToStart.png" alt="Skip to start" class="control-button" width="27px" height="25px" 
+      id="timelineSkipToStart" onclick="timelineSkipToStart()" />
+      <img src="icons/pngs/Rewind.png" alt="Rewind" class="control-button" width="50px" height="25px"
+      id="timelineRewind" onclick="timelineSkipTenBack()" />
+      <img src="icons/pngs/Play.png" alt="Play" class="control-button" width="25px" height="25px"
+      id="timelinePlayPause" onclick="timelinePlayPause()" />
+      <img src="icons/pngs/FastForward.png" alt="Rewind" class="control-button" width="50px" height="25px"
+      id="timelineFastForward" onclick="timelineSkipTenForward()" />
+      <img src="icons/pngs/SkipToEnd.png" alt="Skip to start" class="control-button" width="27px" height="25px"
+      id="timelineSkipToEnd" onclick="timelineSkipToEnd()" />
+    </div>
+  </div>
+  <div class="panel w3-round">Testing</div>
+</body>
+</html>
