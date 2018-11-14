@@ -1,21 +1,3 @@
-//my code
-const ffmpeg = require("ffmpeg");
-
-try {
-	var process = new ffmpeg('assets/ScoopingIntoBin.MOV');
-	process.then(function(video) {
-		//get FPS
-		console.log(video.metadata.video.fps);
-		// FFmpeg configuration
-		//console.log(video.info_configuration);
-	}, function(err) {
-		console.log('Error: ' + err);
-	});
-} catch(e) {
-	console.log(e.code);
-	console.log(e.msg);
-}
-
 //app core code, basically
 const { app, BrowserWindow } = require("electron");
 
@@ -71,3 +53,6 @@ app.on("activate", () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+// SHUT UP.
+
+require("./video-handler.js");
