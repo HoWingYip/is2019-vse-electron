@@ -81,15 +81,13 @@ window.onload = () => {
   var timelineDurationIndicator = document.getElementById("timelineDuration");
 
   //show timeline video duration
-  timelineVideo.addEventListener("durationchange", () => {
-    if(timelineVideo.duration < 60) {
-      timelineDurationIndicator.innerHTML = "0:" + Math.floor(timelineVideo.duration);
-    } else if (timelineVideo.duration >= 60) {
-      var durationMinutes = Math.floor(timelineVideo.duration / 60);
-      var durationSeconds = Math.floor(timelineVideo.duration - durationMinutes * 60);
-      timelineDurationIndicator.innerHTML = durationMinutes + ":" + durationSeconds;
-    }
-  });
+  if(timelineVideo.duration < 60) {
+    timelineDurationIndicator.innerHTML = "0:" + Math.floor(timelineVideo.duration);
+  } else if (timelineVideo.duration >= 60) {
+    var timelineDurationMinutes = Math.floor(timelineVideo.duration / 60);
+    var timelineDurationSeconds = Math.floor(timelineVideo.duration - timelineDurationMinutes * 60);
+    timelineDurationIndicator.innerHTML = timelineDurationMinutes + ":" + timelineDurationSeconds;
+  }
 
   //update timeline current time indicator
   timelineVideo.addEventListener("timeupdate", () => {
@@ -107,15 +105,13 @@ window.onload = () => {
   var sourceDurationIndicator = document.getElementById("sourceDuration");
 
   //show source video duration
-  sourceVideo.addEventListener("durationchange", () => {
-    if(sourceVideo.duration < 60) {
-      sourceDurationIndicator.innerHTML = "0:" + Math.floor(sourceVideo.duration);
-    } else if (sourceVideo.duration >= 60) {
-      var durationMinutes = Math.floor(sourceVideo.duration / 60);
-      var durationSeconds = Math.floor(sourceVideo.duration - durationMinutes * 60);
-      sourceDurationIndicator.innerHTML = durationMinutes + ":" + durationSeconds;
-    }
-  });
+  if(sourceVideo.duration < 60) {
+    sourceDurationIndicator.innerHTML = "0:" + Math.floor(sourceVideo.duration);
+  } else if (sourceVideo.duration >= 60) {
+    var sourceDurationMinutes = Math.floor(sourceVideo.duration / 60);
+    var sourceDurationSeconds = Math.floor(sourceVideo.duration - sourceDurationMinutes * 60);
+    sourceDurationIndicator.innerHTML = sourceDurationMinutes + ":" + sourceDurationSeconds;
+  }
 
   //update source current time indicator
   sourceVideo.addEventListener("timeupdate", () => {
