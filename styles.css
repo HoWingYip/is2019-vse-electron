@@ -13,11 +13,6 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
 }
 
-video {
-  display: block;
-  margin-bottom: 16px;
-}
-
 /* specialised code for other elements */
 .video-panel, .video-panel-second, .panel {
   background-color: rgb(75, 75, 75);
@@ -34,8 +29,12 @@ video {
 }
 
 .video-panel, .video-panel-second {
+  display: inline-flex;
+  height: auto;
+  padding-bottom: 90px;
   width: calc(50% - 11px);
   text-align: center;
+  position: relative;
 }
 
 .panel {
@@ -44,6 +43,22 @@ video {
 
 .video-panel-second {
   margin-left: 16px;
+}
+
+.video-container {
+  display: block;
+  height: 400px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.controls {
+  position: absolute;
+  bottom: 24px; /* parent element had 24px padding so this imitates it */
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .control-button {
