@@ -1,5 +1,20 @@
 //my code
+const ffmpeg = require("ffmpeg");
 
+try {
+	var process = new ffmpeg('assets/ScoopingIntoBin.MOV');
+	process.then(function(video) {
+		//get FPS
+		console.log(video.metadata.video.fps);
+		// FFmpeg configuration
+		//console.log(video.info_configuration);
+	}, function(err) {
+		console.log('Error: ' + err);
+	});
+} catch(e) {
+	console.log(e.code);
+	console.log(e.msg);
+}
 
 //app core code, basically
 const { app, BrowserWindow } = require("electron");
@@ -11,6 +26,7 @@ let win;
 function createWindow() {
 	// Create the browser window.
 	win = new BrowserWindow({ show: false });
+	//prevent flash of black
 	win.once("ready-to-show", () => {
 		win.show();
 	});

@@ -19,5 +19,8 @@
   "homepage": "https://github.com/HoWingYip/is2019-vse-electron#readme",
   "devDependencies": {
     "electron": "^3.0.9"
+  },
+  "dependencies": {
+    "ffmpeg": "0.0.4"
   }
 }
