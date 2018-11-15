@@ -11,8 +11,17 @@
   <title>Editor UI Demo</title>
 </head>
 <body>
-  <div class="video-panel w3-round">
-    <video id="source-video" src="assets/PostingLetter.MOV" height="75%" width="75%" preload="auto">Video not displayed.</video>
+  <div class="video-panel">
+    <span class="placeholder">Select a video</span>
+    <!--<span class="panel-title">Source</span>-->
+    <!--
+    TODO: put above div into a separate div for switching between different panels
+    Source video panel will be in same "group" as media browser / asset explorer
+    -->
+    <div class="video-container">
+      <video id="source-video" src="" height="100%" width="100%" preload="auto">Video not displayed.</video>
+      <!--get src of video selected in dialog-->
+    </div>
     <div class="controls">
       <div class="timer" id="sourceCurrentTime">0:00</div>
       <input type="range" class="scrubber" id="sourceScrubber" value="0">
@@ -30,8 +39,11 @@
       id="sourceSkipToEnd" onclick="sourceSkipToEnd()" />
     </div>
   </div>
-  <div class="video-panel-second w3-round">
-    <video id="timeline-video" src="assets/ScoopingIntoBin.MOV" height="75%" width="75%" preload="auto">Video not displayed.</video>
+  <div class="video-panel-second">
+    <div class="video-container">
+      <video id="timeline-video" src="" height="100%" width="100%" preload="auto">Video not displayed.</video>
+      <!--only display video when user has selected one in dialog-->
+    </div>
     <div class="controls">
       <div class="timer" id="timelineCurrentTime">0:00</div>
       <input type="range" class="scrubber" id="timelineScrubber" value="0">
@@ -49,6 +61,10 @@
       id="timelineSkipToEnd" onclick="timelineSkipToEnd()" />
     </div>
   </div>
-  <div class="panel w3-round">Testing</div>
+  <div class="panel-selector-container">
+    <div class="switcher-panel" data-panelNumber="0" data-selected="true">Source</div>
+    <div class="switcher-panel" data-panelNumber="1" data-selected="false">Media</div>
+    <!--use for loop to iterate through stuff and make it deselected upon selection of a certain panel-->
+  </div>
 </body>
 </html>

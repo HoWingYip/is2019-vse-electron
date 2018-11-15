@@ -14,10 +14,9 @@ body {
 }
 
 /* specialised code for other elements */
-.video-panel, .video-panel-second, .panel {
+.video-panel, .video-panel-second, .panel, .switcher-panel {
   background-color: rgb(75, 75, 75);
   color: rgb(185, 185, 185);
-  padding: 24px; 
   display: inline-block;
   overflow: auto;
 
@@ -28,17 +27,34 @@ body {
   user-select: none;
 }
 
+.video-panel, .video-panel-second, .panel {
+  padding: 24px;
+}
+
+.video-panel-second, .panel {
+  border-radius: 4px;
+}
+
+.video-panel {
+  border-radius: 4px 4px 4px 0; 
+  /* bottom left corner is not rounded due to switcher panel being directly underneath */
+}
+
+.switcher-panel {
+  text-align: center;
+  font-size: 14px;
+  padding: 4px 8px 4px 8px;
+  border-radius: 0 0 4px 4px;
+  /* top corners are not rounded due to source video panel being directly above */
+  cursor: pointer;
+}
+
 .video-panel, .video-panel-second {
   display: inline-flex;
-  height: auto;
-  padding-bottom: 90px;
+  height: 540px;
   width: calc(50% - 11px);
   text-align: center;
   position: relative;
-}
-
-.panel {
-  margin-top: 16px;
 }
 
 .video-panel-second {
@@ -50,11 +66,28 @@ body {
   height: 400px;
   text-align: center;
   margin-bottom: 24px;
+  border-radius: 24px;
+  border: 5px dotted grey;
+  width: 100%;
+}
+
+.placeholder {
+  font-size: 24px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 37%;
+}
+
+.panel-title {
+  position: absolute;
+  top: 100%;
+  margin-bottom: 24px;
 }
 
 .controls {
   position: absolute;
-  bottom: 24px; /* parent element had 24px padding so this imitates it */
+  top: 445px; /* parent element had 24px padding so this imitates it */
   left: 0;
   right: 0;
   margin-left: auto;
