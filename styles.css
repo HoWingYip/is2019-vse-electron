@@ -19,6 +19,7 @@ body {
   color: rgb(185, 185, 185);
   display: inline-block;
   overflow: auto;
+  vertical-align: top;
 
   /* disallow selection within panels */
   -moz-user-select: none;
@@ -40,6 +41,19 @@ body {
   /* bottom left corner is not rounded due to switcher panel being directly underneath */
 }
 
+.panel-container {
+  display: block;
+  width: 100%;
+}
+
+#panel-container-source {
+  display: inline-block;
+}
+
+#panel-container-media {
+  display: none;
+}
+
 .switcher-panel {
   text-align: center;
   font-size: 14px;
@@ -47,6 +61,11 @@ body {
   border-radius: 0 0 4px 4px;
   /* top corners are not rounded due to source video panel being directly above */
   cursor: pointer;
+}
+
+#switchSource {
+  background-image: linear-gradient(rgb(75, 75, 75), rgb(95, 95, 95));
+  color: rgb(209, 209, 209);
 }
 
 .video-panel, .video-panel-second {
