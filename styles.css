@@ -36,6 +36,10 @@ body {
   border-radius: 4px;
 }
 
+.panel {
+  margin-top: 24px;
+}
+
 .video-panel {
   border-radius: 4px 4px 4px 0; 
   /* bottom left corner is not rounded due to switcher panel being directly underneath */
@@ -54,6 +58,11 @@ body {
   display: none;
 }
 
+.panel-selector-container {
+  height: 1em;
+  background-color: rgb(48, 48, 48);
+}
+
 .switcher-panel {
   text-align: center;
   font-size: 14px;
@@ -61,11 +70,17 @@ body {
   border-radius: 0 0 4px 4px;
   /* top corners are not rounded due to source video panel being directly above */
   cursor: pointer;
+  position: absolute;
+  z-index: 2;
 }
 
 #switchSource {
   background-image: linear-gradient(rgb(75, 75, 75), rgb(95, 95, 95));
   color: rgb(209, 209, 209);
+}
+
+#switchMedia {
+  left: 5.7em;
 }
 
 .video-panel, .video-panel-second {
@@ -165,4 +180,10 @@ body {
   font-size: 20px;
   vertical-align: middle;
   display: inline-block;
+}
+
+.colour-palette {
+  text-align: center;
+  width: 11.45em;
+  height: calc(100% - 582px)
 }
