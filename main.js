@@ -7,13 +7,15 @@ let win;
 
 function createWindow() {
 	// Create the browser window.
-	win = new BrowserWindow({ show: false });
+	win = new BrowserWindow({ 
+		show: false,
+		frame: false
+	});
 	//prevent flash of black
 	win.once("ready-to-show", () => {
 		win.show();
 	});
 	win.maximize();
-	win.setFullScreen(true);
 
 	// and load the index.html of the app.
 	win.loadFile("index.html");
