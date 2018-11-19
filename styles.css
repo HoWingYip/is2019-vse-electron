@@ -18,7 +18,7 @@ body {
   background-color: rgb(75, 75, 75);
   color: rgb(185, 185, 185);
   display: inline-block;
-  overflow: auto;
+  overflow: hidden;
   vertical-align: top;
 
   /* disallow selection within panels */
@@ -48,6 +48,7 @@ body {
 .panel-container {
   display: block;
   width: 100%;
+  height: 100%;
 }
 
 #panel-container-source {
@@ -84,8 +85,7 @@ body {
 }
 
 .video-panel, .video-panel-second {
-  display: inline-flex;
-  height: 540px;
+  height: 60%;
   width: calc(50% - 11px);
   text-align: center;
   position: relative;
@@ -106,7 +106,7 @@ body {
 }
 
 .video-container {
-  height: 400px;
+  height: 80%;
 }
 
 .fullheight-dotted-container {
@@ -143,7 +143,7 @@ body {
 
 .controls {
   position: absolute;
-  top: 445px; /* parent element had 24px padding so this imitates it */
+  bottom: 24px; /* parent element had 24px padding so this imitates it */
   left: 0;
   right: 0;
   margin-left: auto;
@@ -207,5 +207,7 @@ body {
 .colour-palette {
   text-align: center;
   width: 11.45em;
-  height: calc(100% - 582px)
+  height: calc(40% - 39px); /* magic value bois */
+  /* was gonna put how I found it here
+  but I forgot it already whoops */
 }
