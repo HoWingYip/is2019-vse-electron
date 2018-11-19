@@ -85,7 +85,7 @@ body {
 }
 
 .video-panel, .video-panel-second {
-  height: 60%;
+  height: 55%;
   width: calc(50% - 11px);
   text-align: center;
   position: relative;
@@ -106,7 +106,7 @@ body {
 }
 
 .video-container {
-  height: 80%;
+  height: 77%;
 }
 
 .fullheight-dotted-container {
@@ -207,7 +207,7 @@ body {
 .colour-palette {
   text-align: center;
   width: 11.45em;
-  height: calc(40% - 39px); /* magic value bois */
+  height: calc(45% - 39px); /* magic value bois */
   /* was gonna put how I found it here
   but I forgot it already whoops */
 }
