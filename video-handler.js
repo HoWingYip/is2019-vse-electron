@@ -5,8 +5,16 @@ const {dialog} = require("electron");
 
 ipcMain.on("importAssets", () => {
   dialog.showOpenDialog({
+    title: "Import",
     defaultPath: "~/",
-    /* TODO */
+    buttonLabel: "Import",
+    filters: [
+      {name: "All Supported Files", extensions: ["mp4", "webm", "ogg", "png", "jpg", "jpeg", "bmp", "gif", "wav", "mp3", "mp4"]},
+      {name: "Video Files", extensions: ["mp4", "webm", "ogg"]}, /* TODO: find complete list of all file formats of this type */
+      {name: "Image Files", extensions: ["png", "jpg", "jpeg", "bmp", "gif"]}, /* TODO: find complete list of all file formats of this type */
+      {name: "Audio Files", extensions: ["wav", "mp3", "ogg", "mp4"]} /* TODO: find complete list of all file formats of this type */
+    ],
+    properties: ["openFile", "multiSelections"]
   });
 });
 
