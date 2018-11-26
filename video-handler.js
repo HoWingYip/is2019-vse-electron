@@ -10,9 +10,9 @@ ipcMain.on("importAssets", () => {
     buttonLabel: "Import",
     filters: [
       {name: "All Supported Files", extensions: ["mp4", "mov", "ogg", "webm", "m4v", "wav", "mp3", "webm", "aac", "flac", "m4a", "ogg", "oga", "opus", "png", "jpg", "jpeg", "bmp", "gif", "webp"]},
-      {name: "Video Files", extensions: ["mp4", "mov", "ogg", "webm", "m4v"]}, /* TODO: find complete list of all file formats of this type */
-      {name: "Audio Files", extensions: ["wav", "mp3", "webm", "aac", "flac", "m4a", "ogg", "oga", "opus"]}, /* TODO: find complete list of all file formats of this type */
-      {name: "Image Files", extensions: ["png", "jpg", "jpeg", "bmp", "gif", "webp"]} /* TODO: find complete list of all file formats of this type */
+      {name: "Video Files", extensions: ["mp4", "mov", "ogg", "webm", "m4v"]},
+      {name: "Audio Files", extensions: ["wav", "mp3", "webm", "aac", "flac", "m4a", "ogg", "oga", "opus"]},
+      {name: "Image Files", extensions: ["png", "jpg", "jpeg", "bmp", "gif", "webp"]}
     ],
     properties: ["openFile", "multiSelections"]
   });
