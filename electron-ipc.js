@@ -6,7 +6,8 @@ function importAssets() {
 
 ipcRenderer.on("importedAssetsSend", (_, importedFiles) => {
   console.log(importedFiles);
-  console.log("holy crap imported files was actually received?!?!");
+  //hide "no files imported" placeholder
+  document.getElementsByClassName("placeholder-fullheight")[0].style.display = "none";
 });
 
 /*
