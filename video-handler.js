@@ -21,8 +21,18 @@ ipcMain.on("importAssets", (importedAssetsRequest) => {
       properties: ["openFile", "multiSelections"]
     }, (files) => {
       console.log(`Files selected: \n${files}\n\n`);
-      for(var filename of files) {
-        importedFiles.push(filename);
+      try {
+        for(var filename of files) {
+          //add files to imported files array
+          importedFiles.push(filename);
+        }
+      } catch(e) {
+        console.error(e);
+        /*
+        bug: if import is cancelled,
+        "files is not iterable" is thrown
+        can't do crap about that...
+        */
       }
       console.log(`importedFiles array: \n${importedFiles}\n\n`);
       importedAssetsRequest.sender.send("importedAssetsSend", importedFiles);
