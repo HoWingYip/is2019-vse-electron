@@ -4,6 +4,12 @@ function importAssets() {
   ipcRenderer.send("importAssets");
 }
 
+ipcRenderer.on("importedAssetsSend", (_, importedFiles) => {
+  console.log(importedFiles);
+  console.log("holy crap imported files was actually received?!?!");
+});
+
+/*
 //request source video metadata on page load
 (() => {
   ipcRenderer.send("sourceMetadataRequest");
@@ -12,3 +18,4 @@ function importAssets() {
 ipcRenderer.on("sourceMetadataSend", (_, sourceVideoMetadata) => {
   console.log(sourceVideoMetadata);
 });
+*/

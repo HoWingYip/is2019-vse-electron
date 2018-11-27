@@ -3,19 +3,33 @@ const {ipcMain} = require("electron");
 const ffmpeg = require("ffmpeg");
 const {dialog} = require("electron");
 
-ipcMain.on("importAssets", () => {
-  dialog.showOpenDialog({
-    title: "Import",
-    defaultPath: "~/",
-    buttonLabel: "Import",
-    filters: [
-      {name: "All Supported Files", extensions: ["mp4", "mov", "ogg", "webm", "m4v", "wav", "mp3", "webm", "aac", "flac", "m4a", "ogg", "oga", "opus", "png", "jpg", "jpeg", "bmp", "gif", "webp"]},
-      {name: "Video Files", extensions: ["mp4", "mov", "ogg", "webm", "m4v"]},
-      {name: "Audio Files", extensions: ["wav", "mp3", "webm", "aac", "flac", "m4a", "ogg", "oga", "opus"]},
-      {name: "Image Files", extensions: ["png", "jpg", "jpeg", "bmp", "gif", "webp"]}
-    ],
-    properties: ["openFile", "multiSelections"]
-  });
+var importedFiles = new Array();
+
+//show import dialog on click of import area
+ipcMain.on("importAssets", (importedAssetsRequest) => {
+  try {
+    dialog.showOpenDialog({
+      title: "Import",
+      defaultPath: "~/",
+      buttonLabel: "Import",
+      filters: [
+        {name: "All Supported Files", extensions: ["mp4", "mov", "ogg", "webm", "m4v", "wav", "mp3", "webm", "aac", "flac", "m4a", "ogg", "oga", "opus", "png", "jpg", "jpeg", "bmp", "gif", "webp"]},
+        {name: "Video Files", extensions: ["mp4", "mov", "ogg", "webm", "m4v"]},
+        {name: "Audio Files", extensions: ["wav", "mp3", "webm", "aac", "flac", "m4a", "ogg", "oga", "opus"]},
+        {name: "Image Files", extensions: ["png", "jpg", "jpeg", "bmp", "gif", "webp"]}
+      ],
+      properties: ["openFile", "multiSelections"]
+    }, (files) => {
+      console.log(`Files selected: \n${files}\n\n`);
+      for(var filename of files) {
+        importedFiles.push(filename);
+      }
+      console.log(`importedFiles array: \n${importedFiles}\n\n`);
+      importedAssetsRequest.sender.send("importedAssetsSend", importedFiles);
+    });
+  } catch(e) {
+    console.error(e);
+  }
 });
 
 /*
