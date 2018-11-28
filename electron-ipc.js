@@ -6,8 +6,10 @@ function importAssets() {
 
 ipcRenderer.on("importedAssetsSend", (_, importedFiles) => {
   console.log(importedFiles);
-  //hide "no files imported" placeholder
-  document.getElementsByClassName("placeholder-fullheight")[0].style.display = "none";
+  //hide "no files imported" placeholder if files were actually imported
+  if(importedFiles.length > 0) {
+    document.getElementsByClassName("placeholder-fullheight")[0].style.display = "none";
+  }
 });
 
 /*
