@@ -144,8 +144,6 @@ function sourceSkipToStart() {
 }
 
 /* skip 10 frames back functions */
-//get fps of video? seems extremely hard in HTML5
-//might consider porting this to Electron
 
 function timelineSkipTenBack() {
 
