@@ -59,6 +59,10 @@ function frameExtractionTest() {
         count: 1,
         filename: "thumbnail-%f", //generate file with name "thumbnail-(filename)"
         folder: "saved-frames-test/"
+      }).on("error", (err, stdout, stderr) => {
+        console.error(err);
+        console.error(`FFmpeg encountered an error:\n${stderr}\n\n`);
+        console.error(`FFmpeg output:\n${stdout}\n\n`);
       });
     }
   }
