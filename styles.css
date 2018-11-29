@@ -119,6 +119,7 @@ table {
 
 /* align tables to top of flex, everything else to bottom */
 table#assets {
+  display: none;
   align-self: flex-start;
 }
 
