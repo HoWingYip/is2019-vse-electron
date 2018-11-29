@@ -1,4 +1,5 @@
-var fs = require("fs");
+const fs = require("fs");
+const path = require("path");
 const {ipcMain} = require("electron");
 const ffmpeg = require("fluent-ffmpeg");
 const {dialog} = require("electron");
@@ -45,48 +46,23 @@ function frameExtractionTest() {
   //create new ffmpeg instance for every video
   //with path to video file
   for(var fileNumber in importedFiles) {
-    importedFiles[fileNumber] = new ffmpeg(importedFiles[fileNumber]);
-    importedFiles[fileNumber].on("filenames", (filenames) => {
-      console.log("Generating thumbnails: " + filenames.join(", "));
-    }).on("end", () => {
-      console.log("Thumbnails generated");
-    }).screenshots({
-      timestamps: [JSON.stringify(Math.random()) + "%"],
-      count: 1,
-      filename: "thumbnail-%f", //generate file with name "thumbnail-(filename)"
-      folder: "saved-frames-test/"
-    });
-  }
-}
-
-/*
-function frameExtractionTest() {
-  for(var file of importedFiles) {
-    console.log(file);
-    try {
-      var videoProcess = new ffmpeg(file);
-      videoProcess.then((video) => {
-        video.fnExtractFrameToJPG("saved-frames-test/", {
-          frame_rate: 1,
-          number: 1,
-          file_name: "frame_%t_%s"
-        }, (err, frames) => {
-          if(err) throw err;
-          console.log("Frames: " + frames);
-        });
-      }, (err) => {
-        console.error(err);
+    //if thumbnail already exists, don't generate it again
+    //could bug out by showing old thumbnail if file was changed but still has same name
+    if(!fs.existsSync("saved-frames-test/thumbnail-" + path.basename(importedFiles[fileNumber]) + ".png")) {
+      importedFiles[fileNumber] = new ffmpeg(importedFiles[fileNumber]);
+      importedFiles[fileNumber].on("filenames", (filenames) => {
+        console.log("Generating thumbnails: " + filenames.join(", "));
+      }).on("end", () => {
+        console.log("Thumbnails generated");
+      }).screenshots({
+        timestamps: [JSON.stringify(Math.random()) + "%"],
+        count: 1,
+        filename: "thumbnail-%f", //generate file with name "thumbnail-(filename)"
+        folder: "saved-frames-test/"
       });
-    } catch(e) {
-      //error occurs here!
-      //ok, bug is with ffmpeg package...
-      //js escaping of file path with \\ causes "input file does not exist" error
-      //considering forking ffmpeg module, might PR back.
-      console.error(e);
     }
   }
 }
-*/
 
 /*
 var sourceVideoMetadata;
