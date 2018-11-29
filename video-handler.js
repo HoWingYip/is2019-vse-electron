@@ -27,19 +27,60 @@ ipcMain.on("importAssets", (importedAssetsRequest) => {
         if(files !== undefined) {
           for(var filename of files) {
             //add files to imported files array
+            //replacing space with escaped space to avoid problem with spaces in commands
+            //then de-escaping backslashes to finally get correct path
+            //sigh...
+            //importedFiles.push(JSON.stringify(filename).replace(/"/g, ""));
             importedFiles.push(filename);
+            /*
+            JSON.stringify returns quoted string and \\\\
+            What fs.existsSync() needs: quotes and \\ (but NO \\\\)
+            What ffmpeg needs: quotes but no \\
+            */
+            console.log(importedFiles);
+            for(var file in importedFiles) console.log(fs.existsSync(file));
+            console.log(importedFiles);
           }
         }
       } catch(e) {
         console.error(e);
       }
       console.log(`importedFiles array: \n${importedFiles}\n\n`);
+      //notify ipcRenderer of file import
       importedAssetsRequest.sender.send("importedAssetsSend", importedFiles);
+      frameExtractionTest();
     });
   } catch(e) {
     console.error(e);
   }
 });
+
+function frameExtractionTest() {
+  for(var file of importedFiles) {
+    console.log(file);
+    try {
+      var videoProcess = new ffmpeg(file);
+      videoProcess.then((video) => {
+        video.fnExtractFrameToJPG("saved-frames-test/", {
+          frame_rate: 1,
+          number: 1,
+          file_name: "frame_%t_%s"
+        }, (err, frames) => {
+          if(err) throw err;
+          console.log("Frames: " + frames);
+        });
+      }, (err) => {
+        console.error(err);
+      });
+    } catch(e) {
+      //error occurs here!
+      //ok, bug is with ffmpeg package...
+      //js escaping of file path with \\ causes "input file does not exist" error
+      //considering forking ffmpeg module, might PR back.
+      console.error(e);
+    }
+  }
+}
 
 /*
 var sourceVideoMetadata;

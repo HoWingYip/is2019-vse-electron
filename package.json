@@ -20,7 +20,5 @@
   "devDependencies": {
     "electron": "^3.0.9"
   },
-  "dependencies": {
-    "ffmpeg": "0.0.4"
-  }
+  "dependencies": {}
 }
