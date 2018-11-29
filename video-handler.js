@@ -4,6 +4,7 @@ const ffmpeg = require("fluent-ffmpeg");
 const {dialog} = require("electron");
 
 var importedFiles = new Array();
+var videos = new Array();
 
 //show import dialog on click of import area
 ipcMain.on("importAssets", (importedAssetsRequest) => {
@@ -25,21 +26,10 @@ ipcMain.on("importAssets", (importedAssetsRequest) => {
         //check that import was not cancelled
         //to avoid throwing "files is not iterable"
         if(files !== undefined) {
-          for(var filename of files) {
-            //add files to imported files array
-            //replacing space with escaped space to avoid problem with spaces in commands
-            //then de-escaping backslashes to finally get correct path
-            //sigh...
-            //importedFiles.push(JSON.stringify(filename).replace(/"/g, ""));
-            importedFiles.push(filename);
-            /*
-            JSON.stringify returns quoted string and \\\\
-            What fs.existsSync() needs: quotes and \\ (but NO \\\\)
-            What ffmpeg needs: quotes but no \\
-            */
-            console.log(importedFiles);
-            for(var file in importedFiles) console.log(fs.existsSync(file));
-            console.log(importedFiles);
+          for(var fileNumber in files) {
+            //add file to list of imported files
+            importedFiles.push(files[fileNumber]);
+            videos = importedFiles;
           }
         }
       } catch(e) {
@@ -55,6 +45,25 @@ ipcMain.on("importAssets", (importedAssetsRequest) => {
   }
 });
 
+function frameExtractionTest() {
+  //create new ffmpeg instance for every video
+  //with path to video file
+  for(var fileNumber in videos) {
+    videos[fileNumber] = new ffmpeg(videos[fileNumber]);
+    videos[fileNumber].on("filenames", (filenames) => {
+      console.log("Generating thumbnails: " + filenames.join(", "));
+    }).on("end", () => {
+      console.log("Thumbnails generated");
+    }).screenshots({
+      timestamps: [JSON.stringify(Math.random()) + "%"],
+      count: 1,
+      filename: "thumbnail-%b", //generate file with name "thumbnail-(filename)"
+      folder: "saved-frames-test/"
+    });
+  }
+}
+
+/*
 function frameExtractionTest() {
   for(var file of importedFiles) {
     console.log(file);
@@ -81,6 +90,7 @@ function frameExtractionTest() {
     }
   }
 }
+*/
 
 /*
 var sourceVideoMetadata;
