@@ -1,10 +1,11 @@
 const fs = require("fs");
 const path = require("path");
-const {ipcMain} = require("electron");
 const ffmpeg = require("fluent-ffmpeg");
+const {ipcMain} = require("electron");
 const {dialog} = require("electron");
 
 var importedFiles = new Array();
+var ffmpegProcesses = new Array();
 
 //show import dialog on click of import area
 ipcMain.on("importAssets", (importedAssetsRequest) => {
@@ -41,22 +42,28 @@ ipcMain.on("importAssets", (importedAssetsRequest) => {
       console.log(`importedFiles array: \n${importedFiles}\n\n`);
       //notify ipcRenderer of file import
       importedAssetsRequest.sender.send("importedAssetsSend", importedFiles);
-      frameExtractionTest();
+      extractThumbnails();
     });
   } catch(e) {
     console.error(e);
   }
 });
 
-function frameExtractionTest() {
+function extractThumbnails() {
   //create new ffmpeg instance for every video
   //with path to video file
   for(var fileNumber in importedFiles) {
     //if thumbnail already exists, don't generate it again
     //could bug out by showing old thumbnail if file was changed but still has same name
-    if(!fs.existsSync("saved-frames-test/thumbnail-" + path.basename(importedFiles[fileNumber]) + ".png")) {
-      importedFiles[fileNumber] = new ffmpeg(importedFiles[fileNumber]);
-      importedFiles[fileNumber].on("filenames", (filenames) => {
+    //CHANGE TO USE SHA512 OF FILE INSTEAD
+    if(!fs.existsSync("saved-frames-test/thumbnail-" + path.basename(importedFiles[fileNumber].filename) + ".png")) {
+      ffmpegProcesses[fileNumber] = new ffmpeg(importedFiles[fileNumber].filename);
+      ffmpegProcesses[fileNumber].on("filenames", (filenames) => {
+        //set thumbnail paths
+        for(var thumbnailNumber in filenames) {
+          importedFiles[thumbnailNumber].thumbnail = filenames[thumbnailNumber];
+          console.log(filenames[thumbnailNumber]);
+        }
         console.log("Generating thumbnails: " + filenames.join(", "));
       }).on("end", () => {
         console.log("Thumbnails generated");
