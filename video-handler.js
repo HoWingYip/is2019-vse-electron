@@ -61,8 +61,8 @@ function frameExtractionTest() {
         folder: "saved-frames-test/"
       }).on("error", (err, stdout, stderr) => {
         console.error(err);
-        console.error(`FFmpeg encountered an error:\n${stderr}\n\n`);
-        console.error(`FFmpeg output:\n${stdout}\n\n`);
+        if(stderr) console.error(`FFmpeg encountered an error:\n${stderr}\n\n`);
+        if(stdout) console.error(`FFmpeg output:\n${stdout}\n\n`);
       });
     }
   }
