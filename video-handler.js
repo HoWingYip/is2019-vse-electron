@@ -4,7 +4,6 @@ const ffmpeg = require("fluent-ffmpeg");
 const {dialog} = require("electron");
 
 var importedFiles = new Array();
-var videos = new Array();
 
 //show import dialog on click of import area
 ipcMain.on("importAssets", (importedAssetsRequest) => {
@@ -26,11 +25,8 @@ ipcMain.on("importAssets", (importedAssetsRequest) => {
         //check that import was not cancelled
         //to avoid throwing "files is not iterable"
         if(files !== undefined) {
-          for(var fileNumber in files) {
-            //add file to list of imported files
-            importedFiles.push(files[fileNumber]);
-            videos = importedFiles;
-          }
+          //add newly imported files to file list
+          importedFiles = importedFiles.concat(files);
         }
       } catch(e) {
         console.error(e);
@@ -48,16 +44,16 @@ ipcMain.on("importAssets", (importedAssetsRequest) => {
 function frameExtractionTest() {
   //create new ffmpeg instance for every video
   //with path to video file
-  for(var fileNumber in videos) {
-    videos[fileNumber] = new ffmpeg(videos[fileNumber]);
-    videos[fileNumber].on("filenames", (filenames) => {
+  for(var fileNumber in importedFiles) {
+    importedFiles[fileNumber] = new ffmpeg(importedFiles[fileNumber]);
+    importedFiles[fileNumber].on("filenames", (filenames) => {
       console.log("Generating thumbnails: " + filenames.join(", "));
     }).on("end", () => {
       console.log("Thumbnails generated");
     }).screenshots({
       timestamps: [JSON.stringify(Math.random()) + "%"],
       count: 1,
-      filename: "thumbnail-%b", //generate file with name "thumbnail-(filename)"
+      filename: "thumbnail-%f", //generate file with name "thumbnail-(filename)"
       folder: "saved-frames-test/"
     });
   }
