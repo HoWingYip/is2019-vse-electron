@@ -27,7 +27,13 @@ ipcMain.on("importAssets", (importedAssetsRequest) => {
         //to avoid throwing "files is not iterable"
         if(files !== undefined) {
           //add newly imported files to file list
-          importedFiles = importedFiles.concat(files);
+          for(var filename of files) {
+            //write details to object in array
+            importedFiles.push(
+              {filename: filename, thumbnail: ""}
+            );
+          }
+          console.log(importedFiles);
         }
       } catch(e) {
         console.error(e);
