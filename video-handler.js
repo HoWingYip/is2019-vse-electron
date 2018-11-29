@@ -1,6 +1,6 @@
 var fs = require("fs");
 const {ipcMain} = require("electron");
-const ffmpeg = require("ffmpeg");
+const ffmpeg = require("fluent-ffmpeg");
 const {dialog} = require("electron");
 
 var importedFiles = new Array();
