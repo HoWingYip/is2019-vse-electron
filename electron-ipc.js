@@ -6,12 +6,9 @@ function importAssets() {
   ipcRenderer.send("importAssets");
 }
 
-ipcRenderer.on("importedAssetsSend", (_, newlyImportedFiles) => {
-  console.log(`Newly imported files: \n${newlyImportedFiles}\n\n`);
-  for(var filename of newlyImportedFiles) {
-    importedFiles.push(filename);
-  }
-  console.log(`importedFiles array: \n${importedFiles}\n\n`);
+ipcRenderer.on("importedAssetsSend", (_, newImportedFiles) => {
+  importedFiles = newImportedFiles;
+  console.log(newImportedFiles);
   //hide "no files imported" placeholder if files were actually imported
   if(importedFiles.length > 0) {
     document.getElementsByClassName("placeholder-fullheight")[0].style.display = "none";
