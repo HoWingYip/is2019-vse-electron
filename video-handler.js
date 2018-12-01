@@ -64,14 +64,14 @@ function extractThumbnail(fileNumber) {
     console.log("Generating thumbnail: " + filename[0]);
   }).on("end", () => {
     console.log("Thumbnail generated");
+  }).on("error", (err, stdout, stderr) => {
+    console.error(err);
+    if(stderr) console.error(`FFmpeg encountered an error:\n${stderr}\n\n`);
+    if(stdout) console.error(`FFmpeg output:\n${stdout}\n\n`);
   }).screenshots({
     timestamps: [JSON.stringify(Math.random()) + "%"],
     count: 1,
     filename: "thumbnail-%f", //generate file with name "thumbnail-(filename)"
     folder: "saved-frames-test/"
-  }).on("error", (err, stdout, stderr) => {
-    console.error(err);
-    if(stderr) console.error(`FFmpeg encountered an error:\n${stderr}\n\n`);
-    if(stdout) console.error(`FFmpeg output:\n${stdout}\n\n`);
   });
 }
