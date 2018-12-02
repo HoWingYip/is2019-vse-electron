@@ -21,13 +21,13 @@ ipcMain.on("importAssets", (importedAssetsRequest) => {
       {name: "Image Files", extensions: ["png", "jpg", "jpeg", "bmp", "gif", "webp"]}
     ],
     properties: ["openFile", "multiSelections"]
-  }, (files) => {
+  }, async (files) => {
     try {
       //check that import was not cancelled
       //to avoid throwing "files is not iterable"
       if(files !== undefined) {
+        //check if asset(s) with same name exist(s)
         for(var fileNumber in files) {
-          //add files to list of imported files
           var assetWithSameNameExists = false;
           for(var existingFileNumber in importedFiles) {
             if(files[fileNumber] === importedFiles[existingFileNumber].filename) {
@@ -44,17 +44,15 @@ ipcMain.on("importAssets", (importedAssetsRequest) => {
             }
           }
           if(!assetWithSameNameExists) {
+            //add files to list of imported files
             importedFiles.push(
               {filename: files[fileNumber], thumbnail: "", metadata: null, lastsha512: ""}
             );
-            storeMetadataAndHash(fileNumber);
-            extractThumbnail(fileNumber);
+            await storeMetadataAndHash(fileNumber);
+            await extractThumbnail(fileNumber);
           }
         }
-        console.log(importedFiles.length);
         //notify ipcRenderer of file import
-        //THIS FUNCTION SUBMITS THE ARRAY WITHOUT METADATA AND STUFF
-        //HOW TO MAKE IT RIGHT???
         importedAssetsRequest.sender.send("importedAssetsSend", importedFiles);
       }
     } catch(e) {
@@ -63,35 +61,41 @@ ipcMain.on("importAssets", (importedAssetsRequest) => {
   });
 });
 
-function storeMetadataAndHash(fileNumber) {
-  ffmpegProcesses[fileNumber] = new ffmpeg(importedFiles[fileNumber].filename);
-  ffmpegProcesses[fileNumber].ffprobe((err, metadata) => {
-    if(err) throw err;
-    importedFiles[fileNumber].metadata = metadata;
-    importedFiles[fileNumber].lastsha512 = hasha(JSON.stringify(metadata));
-    console.log(`Metadata for file #${fileNumber}`, importedFiles[fileNumber].metadata);
+async function storeMetadataAndHash(fileNumber) {
+  return new Promise(resolve => {
+    ffmpegProcesses[fileNumber] = new ffmpeg(importedFiles[fileNumber].filename);
+    ffmpegProcesses[fileNumber].ffprobe((err, metadata) => {
+      if(err) throw err;
+      importedFiles[fileNumber].metadata = metadata;
+      importedFiles[fileNumber].lastsha512 = hasha(JSON.stringify(metadata));
+      console.log(`Metadata for file #${fileNumber}`, importedFiles[fileNumber].metadata);
+      resolve("Metadata stored.");
+    });
   });
 }
 
-function extractThumbnail(fileNumber) {
-  //create new ffmpeg instance for every video
-  //with path to video file
-  ffmpegProcesses[fileNumber].on("filenames", (filename) => {
-    //DON'T FORGET - FILENAME IS AN ARRAY OF LENGTH 1
-    //(because this function runs one file at a time)
-    //set thumbnail paths
-    importedFiles[fileNumber].thumbnail = "saved-frames-test/" + filename[0];
-    console.log("Generating thumbnail: " + filename[0]);
-  }).on("end", () => {
-    console.log("Thumbnail generated");
-  }).on("error", (err, stdout, stderr) => {
-    console.error(err);
-    if(stderr) console.error(`FFmpeg encountered an error:\n${stderr}\n\n`);
-    if(stdout) console.error(`FFmpeg output:\n${stdout}\n\n`);
-  }).screenshots({
-    timestamps: [JSON.stringify(Math.random()) + "%"],
-    count: 1,
-    filename: "thumbnail-%f", //generate file with name "thumbnail-(filename)"
-    folder: "saved-frames-test/"
+async function extractThumbnail(fileNumber) {
+  return new Promise(resolve => {
+    //create new ffmpeg instance for every video
+    //with path to video file
+    ffmpegProcesses[fileNumber].on("filenames", (filename) => {
+      //DON'T FORGET - FILENAME IS AN ARRAY OF LENGTH 1
+      //(because this function runs one file at a time)
+      //set thumbnail paths
+      importedFiles[fileNumber].thumbnail = "saved-frames-test/" + filename[0];
+      console.log("Generating thumbnail: " + filename[0]);
+    }).on("end", () => {
+      console.log("Thumbnail generated");
+      resolve("Thumbnails generated.");
+    }).on("error", (err, stdout, stderr) => {
+      console.error(err);
+      if(stderr) console.error(`FFmpeg encountered an error:\n${stderr}\n\n`);
+      if(stdout) console.error(`FFmpeg output:\n${stdout}\n\n`);
+    }).screenshots({
+      timestamps: [JSON.stringify(Math.random()) + "%"],
+      count: 1,
+      filename: "thumbnail-%f", //generate file with name "thumbnail-(filename)"
+      folder: "saved-frames-test/"
+    });
   });
 }
