@@ -28,13 +28,33 @@ ipcMain.on("importAssets", (importedAssetsRequest) => {
       if(files !== undefined) {
         for(var fileNumber in files) {
           //add files to list of imported files
-          importedFiles.push(
-            {filename: files[fileNumber], thumbnail: "", metadata: null, lastsha512: ""}
-          );
-          storeMetadataAndHash(fileNumber);
-          extractThumbnail(fileNumber);
+          var assetWithSameNameExists = false;
+          for(var existingFileNumber in importedFiles) {
+            if(files[fileNumber] === importedFiles[existingFileNumber].filename) {
+              console.log("asset with same name already exists");
+              //show error dialog stopping import if asset has conflicting names
+              dialog.showMessageBox({
+                type: "error",
+                title: "Error: no files were imported",
+                message: "An asset with the same filename has already been imported. Please rename the file you are trying to import, or delete the conflicting asset in the Media Browser to import this file."
+              });
+              assetWithSameNameExists = true;
+              //stop the import
+              return;
+            }
+          }
+          if(!assetWithSameNameExists) {
+            importedFiles.push(
+              {filename: files[fileNumber], thumbnail: "", metadata: null, lastsha512: ""}
+            );
+            storeMetadataAndHash(fileNumber);
+            extractThumbnail(fileNumber);
+          }
         }
+        console.log(importedFiles.length);
         //notify ipcRenderer of file import
+        //THIS FUNCTION SUBMITS THE ARRAY WITHOUT METADATA AND STUFF
+        //HOW TO MAKE IT RIGHT???
         importedAssetsRequest.sender.send("importedAssetsSend", importedFiles);
       }
     } catch(e) {
