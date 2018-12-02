@@ -61,7 +61,7 @@ ipcMain.on("importAssets", (importedAssetsRequest) => {
   });
 });
 
-async function storeMetadataAndHash(fileNumber) {
+function storeMetadataAndHash(fileNumber) {
   return new Promise(resolve => {
     ffmpegProcesses[fileNumber] = new ffmpeg(importedFiles[fileNumber].filename);
     ffmpegProcesses[fileNumber].ffprobe((err, metadata) => {
@@ -74,7 +74,7 @@ async function storeMetadataAndHash(fileNumber) {
   });
 }
 
-async function extractThumbnail(fileNumber) {
+function extractThumbnail(fileNumber) {
   return new Promise(resolve => {
     //create new ffmpeg instance for every video
     //with path to video file
