@@ -9,20 +9,20 @@ function importAssets() {
 ipcRenderer.on("importedAssetsSend", (_, newImportedFiles) => {
   importedFiles = newImportedFiles;
   console.log(newImportedFiles);
-  //hide "no files imported" placeholder if files were actually imported
+  //if there are imported assets, display them!
   if(importedFiles.length > 0) {
-    document.getElementsByClassName("placeholder-fullheight")[0].style.display = "none";
-    document.getElementById("assets").style.display = "table";
+    displayAssets();
   }
 });
 
-/*
-//request source video metadata on page load
-(() => {
-  ipcRenderer.send("sourceMetadataRequest");
-})();
+function displayAssets() {
+  //hide the "no assets imported" placeholder
+  document.getElementsByClassName("placeholder-fullheight")[0].style.display = "none";
+  //display table of assets
+  document.getElementById("assets").style.display = "table";
+}
 
-ipcRenderer.on("sourceMetadataSend", (_, sourceVideoMetadata) => {
-  console.log(sourceVideoMetadata);
+ipcRenderer.on("displayImportInProgress", () => {
+  //change "no assets imported" to "importing..."
+  document.getElementsByClassName("placeholder-fullheight")[0].innerHTML = "Importing...";
 });
-*/

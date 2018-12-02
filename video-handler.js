@@ -26,6 +26,8 @@ ipcMain.on("importAssets", (importedAssetsRequest) => {
       //check that import was not cancelled
       //to avoid throwing "files is not iterable"
       if(files !== undefined) {
+        //change "no assets imported" to "importing..."
+        importedAssetsRequest.sender.send("displayImportInProgress");
         //check if asset(s) with same name exist(s)
         for(var fileNumber in files) {
           var assetWithSameNameExists = false;
