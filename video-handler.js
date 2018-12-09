@@ -32,7 +32,7 @@ ipcMain.on("importAssets", (importedAssetsRequest) => {
         for(var fileNumber in files) {
           var assetWithSameNameExists = false;
           for(var existingFileNumber in importedFiles) {
-            if(files[fileNumber] === importedFiles[existingFileNumber].filename) {
+            if(files[fileNumber] === importedFiles[existingFileNumber].filePath) {
               console.log("asset with same name already exists");
               //show error dialog stopping import if asset has conflicting names
               dialog.showMessageBox({
@@ -47,13 +47,18 @@ ipcMain.on("importAssets", (importedAssetsRequest) => {
           }
           if(!assetWithSameNameExists) {
             //add files to list of imported files
-            importedFiles.push(
-              {filename: files[fileNumber], thumbnail: "", metadata: null, lastsha512: ""}
-            );
+            importedFiles.push({
+              filePath: files[fileNumber],
+              filename: path.basename(files[fileNumber]),
+              thumbnail: "",
+              metadata: null,
+              lastsha512: ""
+            });
             await storeMetadataAndHash(fileNumber);
             await extractThumbnail(fileNumber);
           }
         }
+        console.log(importedFiles);
         //notify ipcRenderer of file import
         importedAssetsRequest.sender.send("importedAssetsSend", importedFiles);
       }
@@ -65,7 +70,7 @@ ipcMain.on("importAssets", (importedAssetsRequest) => {
 
 function storeMetadataAndHash(fileNumber) {
   return new Promise(resolve => {
-    ffmpegProcesses[fileNumber] = new ffmpeg(importedFiles[fileNumber].filename);
+    ffmpegProcesses[fileNumber] = new ffmpeg(importedFiles[fileNumber].filePath);
     ffmpegProcesses[fileNumber].ffprobe((err, metadata) => {
       if(err) throw err;
       importedFiles[fileNumber].metadata = metadata;
