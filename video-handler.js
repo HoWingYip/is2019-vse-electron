@@ -5,8 +5,7 @@ const hasha = require("hasha");
 const {ipcMain} = require("electron");
 const {dialog} = require("electron");
 
-var importedFiles = new Array();
-var ffmpegProcesses = new Array();
+var importedFiles = [];
 
 //show import dialog on click of import area
 ipcMain.on("importAssets", (importedAssetsRequest) => {
@@ -26,25 +25,26 @@ ipcMain.on("importAssets", (importedAssetsRequest) => {
       //check that import was not cancelled
       //to avoid throwing "files is not iterable"
       if(files !== undefined) {
+
         //change "no assets imported" to "importing..."
         importedAssetsRequest.sender.send("displayImportInProgress");
-        //check if asset(s) with same name exist(s)
+
+        for(var filePath of files) {
+          //check if asset(s) with same name exist(s)
           var assetWithSameNameExists = checkIfAssetNameConflicts(filePath);
 
           if(!assetWithSameNameExists) {
             //add files to list of imported files
             importedFiles.push({
-              filePath: files[fileNumber],
-              filename: path.basename(files[fileNumber]),
+              filePath, //cool ES6 thingy to represent filePath: filePath
+              filename: path.basename(filePath),
               thumbnail: "",
-              metadata: null,
+              metadata: await storeMetadata(filePath).then(metadata => metadata), // .then() returns metadata
+              //TODO: make storeHash() return hash of metadata and store it here
               lastsha512: ""
             });
-            await storeMetadataAndHash(fileNumber);
-            await extractThumbnail(fileNumber);
           }
         }
-        console.log(importedFiles);
         //notify ipcRenderer of file import
         importedAssetsRequest.sender.send("importedAssetsSend", importedFiles);
       }
@@ -72,15 +72,27 @@ function checkIfAssetNameConflicts(newlyImportedAssetPath) {
   return false;
 }
 
+// FIXME: Hash and thumbnail functions do not work after first import
+// to be fixed by refactoring for functions to return resolved Promise
+// containing hash & thumbnail path respectively
+function storeMetadata(path) {
   return new Promise(resolve => {
-    ffmpegProcesses[fileNumber] = new ffmpeg(importedFiles[fileNumber].filePath);
-    ffmpegProcesses[fileNumber].ffprobe((err, metadata) => {
+    //ffmpegProcesses[fileNumber] = new ffmpeg(importedFiles[fileNumber].filePath);
+    console.log(path);
+    var ffmpegProcess = new ffmpeg(path);
+    ffmpegProcess.ffprobe((err, metadata) => {
       if(err) throw err;
-      importedFiles[fileNumber].metadata = metadata;
-      importedFiles[fileNumber].lastsha512 = hasha(JSON.stringify(metadata));
-      console.log(`Metadata for file #${fileNumber}`, importedFiles[fileNumber].metadata);
-      resolve("Metadata stored.");
+      //importedFiles[fileNumber].metadata = metadata;
+      //importedFiles[fileNumber].lastsha512 = hasha(JSON.stringify(metadata));
+      //console.log(`Metadata for file ${path}`, metadata);
+      resolve(metadata);
     });
+  });
+}
+
+function storeHash(path) {
+  return new Promise(resolve => {
+
   });
 }
 
