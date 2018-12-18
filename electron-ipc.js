@@ -20,6 +20,33 @@ function displayAssets() {
   document.getElementsByClassName("placeholder-fullheight")[0].style.display = "none";
   //display table of assets
   document.getElementById("assets").style.display = "table";
+  //clear table before re-displaying all assets
+  document.querySelector("table#assets > tbody").innerHTML = "";
+  //display the damn assets already!
+  for(var fileNumber in importedFiles) {
+    var assetTable = document.querySelector("table#assets > tbody");
+
+    //create table cell to contain asset
+    var assetTableCell = document.createElement("td");
+
+    //create img element for thumbnail
+    var thumbnail = document.createElement("img");
+    thumbnail.className = "video-thumbnail";
+    thumbnail.src = importedFiles[fileNumber].thumbnail;
+    thumbnail.alt = "Thumbnail";
+
+    //create element to display asset name
+    var thumbnailLabel = document.createElement("div");
+    thumbnailLabel.className = "video-thumbnail-label";
+    thumbnailLabel.innerHTML = importedFiles[fileNumber].filename;
+
+    //add everything to DOM
+    assetTableCell.appendChild(thumbnail);
+    assetTableCell.appendChild(thumbnailLabel);
+    assetTable.appendChild(assetTableCell);
+
+    //TODO: use % 4 (modulo 4) to display assets in rows of 4
+  }
 }
 
 ipcRenderer.on("displayImportInProgress", () => {
