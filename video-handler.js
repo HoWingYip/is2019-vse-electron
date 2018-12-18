@@ -29,22 +29,8 @@ ipcMain.on("importAssets", (importedAssetsRequest) => {
         //change "no assets imported" to "importing..."
         importedAssetsRequest.sender.send("displayImportInProgress");
         //check if asset(s) with same name exist(s)
-        for(var fileNumber in files) {
-          var assetWithSameNameExists = false;
-          for(var existingFileNumber in importedFiles) {
-            if(files[fileNumber] === importedFiles[existingFileNumber].filePath) {
-              console.log("asset with same name already exists");
-              //show error dialog stopping import if asset has conflicting names
-              dialog.showMessageBox({
-                type: "error",
-                title: "Error: no files were imported",
-                message: "An asset with the same filename has already been imported. Please rename the file you are trying to import, or delete the conflicting asset in the Media Browser to import this file."
-              });
-              assetWithSameNameExists = true;
-              //stop the import
-              return;
-            }
-          }
+          var assetWithSameNameExists = checkIfAssetNameConflicts(filePath);
+
           if(!assetWithSameNameExists) {
             //add files to list of imported files
             importedFiles.push({
@@ -68,7 +54,24 @@ ipcMain.on("importAssets", (importedAssetsRequest) => {
   });
 });
 
-function storeMetadataAndHash(fileNumber) {
+function checkIfAssetNameConflicts(newlyImportedAssetPath) {
+  for(var existingAsset of importedFiles) {
+    console.log(existingAsset.filePath);
+    if(newlyImportedAssetPath === existingAsset.filePath) {
+      console.log("asset with same name already exists");
+      //show error dialog stopping import if asset has conflicting names
+      dialog.showMessageBox({
+        type: "error",
+        title: "Error: no files were imported",
+        message: "An asset with the same filename has already been imported. Please rename the file " +
+        "you are trying to import, or delete the conflicting asset in the Media Browser to import this file."
+      });
+      return true;
+    }
+  }
+  return false;
+}
+
   return new Promise(resolve => {
     ffmpegProcesses[fileNumber] = new ffmpeg(importedFiles[fileNumber].filePath);
     ffmpegProcesses[fileNumber].ffprobe((err, metadata) => {
