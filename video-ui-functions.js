@@ -1,7 +1,7 @@
 //define "playing" property of video
 //shoutout to my saviour, Raees Bhatti, on StackOverflow
 Object.defineProperty(HTMLMediaElement.prototype, "playing", {
-  get: function() {
+  get() {
     return !!(this.currentTime > 0 && !this.paused && !this.ended && this.readyState > 2);
   }
 });
@@ -123,8 +123,6 @@ window.onload = () => {
       sourceCurrentTimeIndicator.innerHTML = currentMinutes + ":" + ("0" + Math.floor(currentSeconds)).slice(-2);
     }
   });
-
-  
 };
 
 /* skip to start functions */
