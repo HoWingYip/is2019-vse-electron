@@ -1,0 +1,17 @@
+{
+    "extends": "google",
+    "parserOptions": {
+        "ecmaVersion": 2018
+    },
+    "rules": {
+        "no-unused-vars": "off",
+        "quotes": ["warn", "double"],
+        "linebreak-style": ["error", "windows"],
+        "spaced-comment": ["warn", "always"],
+        "max-len": ["warn", { "code": 80 }],
+        "comma-dangle": ["warn", "never"],
+        "keyword-spacing": "off",
+        "new-cap": "off",
+        "require-jsdoc": "off"
+    }
+}
