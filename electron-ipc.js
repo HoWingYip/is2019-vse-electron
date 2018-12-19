@@ -15,7 +15,7 @@ ipcRenderer.on("importedAssetsSend", (_, newImportedFiles) => {
   }
 });
 
-const noAssetsPlaceholder = document.getElementById("placeholder-fullheight")[0];
+const noAssetsPlaceholder = document.getElementsByClassName("placeholder-fullheight")[0];
 
 function displayAssets() {
   // hide the "no assets imported" placeholder
