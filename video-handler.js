@@ -38,13 +38,14 @@ ipcMain.on("importAssets", (importedAssetsRequest) => {
             importedFiles.push({
               filePath, //cool ES6 thingy to represent filePath: filePath
               filename: path.basename(filePath),
-              thumbnail: "",
+              thumbnail: await extractThumbnail(filePath).then(thumbnailPath => thumbnailPath), //.then() returns thumbnail path
               metadata: await storeMetadata(filePath).then(metadata => metadata), // .then() returns metadata
               //TODO: make storeHash() return hash of metadata and store it here
               lastsha512: ""
             });
           }
         }
+
         //notify ipcRenderer of file import
         importedAssetsRequest.sender.send("importedAssetsSend", importedFiles);
       }
@@ -56,9 +57,7 @@ ipcMain.on("importAssets", (importedAssetsRequest) => {
 
 function checkIfAssetNameConflicts(newlyImportedAssetPath) {
   for(var existingAsset of importedFiles) {
-    console.log(existingAsset.filePath);
     if(newlyImportedAssetPath === existingAsset.filePath) {
-      console.log("asset with same name already exists");
       //show error dialog stopping import if asset has conflicting names
       dialog.showMessageBox({
         type: "error",
@@ -66,55 +65,54 @@ function checkIfAssetNameConflicts(newlyImportedAssetPath) {
         message: "An asset with the same filename has already been imported. Please rename the file " +
         "you are trying to import, or delete the conflicting asset in the Media Browser to import this file."
       });
+
+      //sets assetWithSameNameExists to true
       return true;
     }
   }
+
+  //sets assetWithSameNameExists to false
   return false;
 }
 
-// FIXME: Hash and thumbnail functions do not work after first import
-// to be fixed by refactoring for functions to return resolved Promise
-// containing hash & thumbnail path respectively
+// functions to return resolved Promise containing desired value to store
 function storeMetadata(path) {
   return new Promise(resolve => {
-    //ffmpegProcesses[fileNumber] = new ffmpeg(importedFiles[fileNumber].filePath);
-    console.log(path);
     var ffmpegProcess = new ffmpeg(path);
     ffmpegProcess.ffprobe((err, metadata) => {
       if(err) throw err;
-      //importedFiles[fileNumber].metadata = metadata;
-      //importedFiles[fileNumber].lastsha512 = hasha(JSON.stringify(metadata));
-      //console.log(`Metadata for file ${path}`, metadata);
       resolve(metadata);
     });
   });
 }
 
+// TODO: implement refactor for hash function
 function storeHash(path) {
   return new Promise(resolve => {
 
   });
 }
 
-function extractThumbnail(fileNumber) {
+function extractThumbnail(path) {
   return new Promise(resolve => {
+    var thumbnailPath = "";
     //create new ffmpeg instance for every video
     //with path to video file
-    ffmpegProcesses[fileNumber].on("filenames", (filename) => {
+    var ffmpegProcess = new ffmpeg(path);
+    ffmpegProcess.on("filenames", (filename) => {
       //DON'T FORGET - FILENAME IS AN ARRAY OF LENGTH 1
       //(because this function runs one file at a time)
-      //set thumbnail paths
-      importedFiles[fileNumber].thumbnail = "saved-frames-test/" + filename[0];
       console.log("Generating thumbnail: " + filename[0]);
+      thumbnailPath = "saved-frames-test/" + filename[0];
     }).on("end", () => {
       console.log("Thumbnail generated");
-      resolve("Thumbnails generated.");
+      resolve(thumbnailPath);
     }).on("error", (err, stdout, stderr) => {
       console.error(err);
       if(stderr) console.error(`FFmpeg encountered an error:\n${stderr}\n\n`);
       if(stdout) console.error(`FFmpeg output:\n${stdout}\n\n`);
     }).screenshots({
-      timestamps: [JSON.stringify(Math.random()) + "%"],
+      timestamps: [JSON.stringify(Math.random()) + "%"], //random timestamp for thumbnail
       count: 1,
       filename: "thumbnail-%f", //generate file with name "thumbnail-(filename)"
       folder: "saved-frames-test/"
