@@ -77,10 +77,10 @@ function checkIfAssetNameConflicts(newlyImportedAssetPath) {
 
 // functions to return resolved Promise containing desired value to store
 function storeMetadata(path) {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     var ffmpegProcess = new ffmpeg(path);
     ffmpegProcess.ffprobe((err, metadata) => {
-      if(err) throw err;
+      if(err) reject(Error(err));
       resolve(metadata);
     });
   });
@@ -88,13 +88,12 @@ function storeMetadata(path) {
 
 // TODO: implement refactor for hash function
 function storeHash(path) {
-  return new Promise(resolve => {
-
+  return new Promise((resolve, reject) => {
   });
 }
 
 function extractThumbnail(path) {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     var thumbnailPath = "";
     //create new ffmpeg instance for every video
     //with path to video file
@@ -111,6 +110,7 @@ function extractThumbnail(path) {
       console.error(err);
       if(stderr) console.error(`FFmpeg encountered an error:\n${stderr}\n\n`);
       if(stdout) console.error(`FFmpeg output:\n${stdout}\n\n`);
+      reject(Error(err));
     }).screenshots({
       timestamps: [JSON.stringify(Math.random()) + "%"], //random timestamp for thumbnail
       count: 1,
