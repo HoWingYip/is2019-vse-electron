@@ -14,14 +14,10 @@ ipcMain.on("importAssets", (importedAssetsRequest) => {
     defaultPath: "~/",
     buttonLabel: "Import",
     filters: [
-      {name: "All Supported Files", extensions: ["mp4", "mov", "ogg", "webm",
-        "m4v", "wav", "mp3", "webm", "aac", "flac", "m4a", "ogg", "oga",
-        "opus", "png", "jpg", "jpeg", "bmp", "gif", "webp"]},
+      {name: "All Supported Files", extensions: ["mp4", "mov", "ogg", "webm", "m4v", "wav", "mp3", "webm", "aac", "flac", "m4a", "ogg", "oga", "opus", "png", "jpg", "jpeg", "bmp", "gif", "webp"]},
       {name: "Video Files", extensions: ["mp4", "mov", "ogg", "webm", "m4v"]},
-      {name: "Audio Files", extensions: ["wav", "mp3", "webm", "aac", "flac",
-        "m4a", "ogg", "oga", "opus"]},
-      {name: "Image Files", extensions: ["png", "jpg", "jpeg", "bmp", "gif",
-        "webp"]}
+      {name: "Audio Files", extensions: ["wav", "mp3", "webm", "aac", "flac", "m4a", "ogg", "oga", "opus"]},
+      {name: "Image Files", extensions: ["png", "jpg", "jpeg", "bmp", "gif", "webp"]}
     ],
     properties: ["openFile", "multiSelections"]
   }, async (files) => {
@@ -42,12 +38,9 @@ ipcMain.on("importAssets", (importedAssetsRequest) => {
             importedFiles.push({
               filePath, // cool ES6 thingy to represent filePath: filePath
               filename: path.basename(filePath),
-              thumbnail: await extractThumbnail(filePath)
-                  .then((thumbnailPath) => thumbnailPath),
-              metadata: await storeMetadata(filePath)
-                  .then((metadata) => metadata),
-              lastsha512: await storeHash(filePath)
-                  .then((hash) => hash)
+              thumbnail: await extractThumbnail(filePath).then((thumbnailPath) => thumbnailPath),
+              metadata: await storeMetadata(filePath).then((metadata) => metadata),
+              lastsha512: await storeHash(filePath).then((hash) => hash)
             });
           }
         }
