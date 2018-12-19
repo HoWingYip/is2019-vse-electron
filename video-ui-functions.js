@@ -8,14 +8,14 @@ Object.defineProperty(HTMLMediaElement.prototype, "playing", {
 
 window.onload = () => {
   //initialise timeline video, scrubber & play/pause button elements as JS vars
-  var timelineVideo = document.getElementById("timeline-video");
-  var timelineScrubber = document.getElementById("timelineScrubber");
-  var timelinePlayPauseButton = document.getElementById("timelinePlayPause");
+  const timelineVideo = document.getElementById("timeline-video");
+  const timelineScrubber = document.getElementById("timelineScrubber");
+  const timelinePlayPauseButton = document.getElementById("timelinePlayPause");
 
   //initialise source video, scrubber & play/pause button elements as JS vars
-  var sourceVideo = document.getElementById("source-video");
-  var sourceScrubber = document.getElementById("sourceScrubber");
-  var sourcePlayPauseButton = document.getElementById("sourcePlayPause");
+  const sourceVideo = document.getElementById("source-video");
+  const sourceScrubber = document.getElementById("sourceScrubber");
+  const sourcePlayPauseButton = document.getElementById("sourcePlayPause");
 
   /* play/pause icon change functions */
 
@@ -77,15 +77,15 @@ window.onload = () => {
   /* timer update functions */
 
   //timeline timer code
-  var timelineCurrentTimeIndicator = document.getElementById("timelineCurrentTime");
-  var timelineDurationIndicator = document.getElementById("timelineDuration");
+  const timelineCurrentTimeIndicator = document.getElementById("timelineCurrentTime");
+  const timelineDurationIndicator = document.getElementById("timelineDuration");
 
   //show timeline video duration
   if(timelineVideo.duration < 60) {
     timelineDurationIndicator.innerHTML = "0:" + Math.floor(timelineVideo.duration);
   } else if (timelineVideo.duration >= 60) {
-    var timelineDurationMinutes = Math.floor(timelineVideo.duration / 60);
-    var timelineDurationSeconds = Math.floor(timelineVideo.duration - timelineDurationMinutes * 60);
+    const timelineDurationMinutes = Math.floor(timelineVideo.duration / 60);
+    const timelineDurationSeconds = Math.floor(timelineVideo.duration - timelineDurationMinutes * 60);
     timelineDurationIndicator.innerHTML = timelineDurationMinutes + ":" + timelineDurationSeconds;
   }
 
@@ -94,22 +94,22 @@ window.onload = () => {
     if(timelineVideo.duration < 60) {
       timelineCurrentTimeIndicator.innerHTML = "0:" + ("0" + Math.floor(timelineVideo.currentTime)).slice(-2); /* formats seconds value to 2 digits */
     } else if(timelineVideo.duration >= 60) {
-      var currentMinutes = Math.floor(timelineVideo.currentTime / 60);
-      var currentSeconds = Math.floor(timelineVideo.currentTime - currentMinutes * 60);
+      const currentMinutes = Math.floor(timelineVideo.currentTime / 60);
+      const currentSeconds = Math.floor(timelineVideo.currentTime - currentMinutes * 60);
       timelineCurrentTimeIndicator.innerHTML = currentMinutes + ":" + ("0" + Math.floor(currentSeconds)).slice(-2);
     }
   });
 
   //source timer code
-  var sourceCurrentTimeIndicator = document.getElementById("sourceCurrentTime");
-  var sourceDurationIndicator = document.getElementById("sourceDuration");
+  const sourceCurrentTimeIndicator = document.getElementById("sourceCurrentTime");
+  const sourceDurationIndicator = document.getElementById("sourceDuration");
 
   //show source video duration
   if(sourceVideo.duration < 60) {
     sourceDurationIndicator.innerHTML = "0:" + Math.floor(sourceVideo.duration);
   } else if (sourceVideo.duration >= 60) {
-    var sourceDurationMinutes = Math.floor(sourceVideo.duration / 60);
-    var sourceDurationSeconds = Math.floor(sourceVideo.duration - sourceDurationMinutes * 60);
+    const sourceDurationMinutes = Math.floor(sourceVideo.duration / 60);
+    const sourceDurationSeconds = Math.floor(sourceVideo.duration - sourceDurationMinutes * 60);
     sourceDurationIndicator.innerHTML = sourceDurationMinutes + ":" + sourceDurationSeconds;
   }
 
@@ -118,8 +118,8 @@ window.onload = () => {
     if(sourceVideo.duration < 60) {
       sourceCurrentTimeIndicator.innerHTML = "0:" + ("0" + Math.floor(sourceVideo.currentTime)).slice(-2); /* formats seconds value to 2 digits */
     } else if(sourceVideo.duration >= 60) {
-      var currentMinutes = Math.floor(sourceVideo.currentTime / 60);
-      var currentSeconds = Math.floor(sourceVideo.currentTime - currentMinutes * 60);
+      const currentMinutes = Math.floor(sourceVideo.currentTime / 60);
+      const currentSeconds = Math.floor(sourceVideo.currentTime - currentMinutes * 60);
       sourceCurrentTimeIndicator.innerHTML = currentMinutes + ":" + ("0" + Math.floor(currentSeconds)).slice(-2);
     }
   });
@@ -128,14 +128,14 @@ window.onload = () => {
 /* skip to start functions */
 
 function timelineSkipToStart() {
-  var timelineVideo = document.getElementById("timeline-video");
+  const timelineVideo = document.getElementById("timeline-video");
   
   timelineVideo.pause();
   timelineVideo.currentTime = 0;
 }
 
 function sourceSkipToStart() {
-  var sourceVideo = document.getElementById("source-video");
+  const sourceVideo = document.getElementById("source-video");
 
   sourceVideo.pause();
   sourceVideo.currentTime = 0;
@@ -155,7 +155,7 @@ function sourceSkipTenBack() {
 
 function timelinePlayPause() {
   //initialise video element as JS var
-  var timelineVideo = document.getElementById("timeline-video");
+  const timelineVideo = document.getElementById("timeline-video");
 
   //play the video
   if(timelineVideo.playing) {
@@ -167,7 +167,7 @@ function timelinePlayPause() {
 
 function sourcePlayPause() {
   //initialise video element as JS var
-  var sourceVideo = document.getElementById("source-video");
+  const sourceVideo = document.getElementById("source-video");
 
   //play the video
   if(sourceVideo.playing) {
@@ -190,14 +190,14 @@ function sourceSkipTenForward() {
 /* skip to end functions */
 
 function timelineSkipToEnd() {
-  var timelineVideo = document.getElementById("timeline-video");
+  const timelineVideo = document.getElementById("timeline-video");
 
   timelineVideo.pause();
   timelineVideo.currentTime = timelineVideo.duration;
 }
 
 function sourceSkipToEnd() {
-  var sourceVideo = document.getElementById("source-video");
+  const sourceVideo = document.getElementById("source-video");
 
   sourceVideo.pause();
   sourceVideo.currentTime = sourceVideo.duration;

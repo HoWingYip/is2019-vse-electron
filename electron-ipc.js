@@ -1,6 +1,6 @@
 const {ipcRenderer} = require("electron");
 
-var importedFiles = new Array();
+let importedFiles = [];
 
 function importAssets() {
   ipcRenderer.send("importAssets");
@@ -24,19 +24,19 @@ function displayAssets() {
   document.querySelector("table#assets > tbody").innerHTML = "";
   //display the damn assets already!
   for(var fileNumber in importedFiles) {
-    var assetTable = document.querySelector("table#assets > tbody");
+    const assetTable = document.querySelector("table#assets > tbody");
 
     //create table cell to contain asset
-    var assetTableCell = document.createElement("td");
+    const assetTableCell = document.createElement("td");
 
     //create img element for thumbnail
-    var thumbnail = document.createElement("img");
+    const thumbnail = document.createElement("img");
     thumbnail.className = "video-thumbnail";
     thumbnail.src = importedFiles[fileNumber].thumbnail;
     thumbnail.alt = "Thumbnail";
 
     //create element to display asset name
-    var thumbnailLabel = document.createElement("div");
+    const thumbnailLabel = document.createElement("div");
     thumbnailLabel.className = "video-thumbnail-label";
     thumbnailLabel.innerHTML = importedFiles[fileNumber].filename;
 

@@ -5,48 +5,54 @@ const hasha = require("hasha");
 const {ipcMain} = require("electron");
 const {dialog} = require("electron");
 
-var importedFiles = [];
+const importedFiles = [];
 
-//show import dialog on click of import area
+// show import dialog on click of import area
 ipcMain.on("importAssets", (importedAssetsRequest) => {
   dialog.showOpenDialog({
     title: "Import",
     defaultPath: "~/",
     buttonLabel: "Import",
     filters: [
-      {name: "All Supported Files", extensions: ["mp4", "mov", "ogg", "webm", "m4v", "wav", "mp3", "webm", "aac", "flac", "m4a", "ogg", "oga", "opus", "png", "jpg", "jpeg", "bmp", "gif", "webp"]},
+      {name: "All Supported Files", extensions: ["mp4", "mov", "ogg", "webm",
+        "m4v", "wav", "mp3", "webm", "aac", "flac", "m4a", "ogg", "oga",
+        "opus", "png", "jpg", "jpeg", "bmp", "gif", "webp"]},
       {name: "Video Files", extensions: ["mp4", "mov", "ogg", "webm", "m4v"]},
-      {name: "Audio Files", extensions: ["wav", "mp3", "webm", "aac", "flac", "m4a", "ogg", "oga", "opus"]},
-      {name: "Image Files", extensions: ["png", "jpg", "jpeg", "bmp", "gif", "webp"]}
+      {name: "Audio Files", extensions: ["wav", "mp3", "webm", "aac", "flac",
+        "m4a", "ogg", "oga", "opus"]},
+      {name: "Image Files", extensions: ["png", "jpg", "jpeg", "bmp", "gif",
+        "webp"]}
     ],
     properties: ["openFile", "multiSelections"]
   }, async (files) => {
     try {
-      //check that import was not cancelled
-      //to avoid throwing "files is not iterable"
+      // check that import was not cancelled
+      // to avoid throwing "files is not iterable"
       if(files !== undefined) {
-
-        //change "no assets imported" to "importing..."
+        // change "no assets imported" to "importing..."
         importedAssetsRequest.sender.send("displayImportInProgress");
 
-        for(var filePath of files) {
-          //check if asset(s) with same name exist(s)
-          var assetWithSameNameExists = checkIfAssetNameConflicts(filePath);
+        for(const filePath of files) {
+          // check if asset(s) with same name exist(s)
+          const assetWithSameNameExists = checkIfAssetNameConflicts(filePath);
 
           if(!assetWithSameNameExists) {
-            //add files to list of imported files
-            //TODO: display import progress ("Importing file _ of _")
+            // add files to list of imported files
+            // TODO: display import progress ("Importing file _ of _")
             importedFiles.push({
-              filePath, //cool ES6 thingy to represent filePath: filePath
+              filePath, // cool ES6 thingy to represent filePath: filePath
               filename: path.basename(filePath),
-              thumbnail: await extractThumbnail(filePath).then(thumbnailPath => thumbnailPath), //.then() returns thumbnail path
-              metadata: await storeMetadata(filePath).then(metadata => metadata), // .then() returns metadata
-              lastsha512: await storeHash(filePath).then(hash => hash) //.then() returns hash
+              thumbnail: await extractThumbnail(filePath)
+                  .then((thumbnailPath) => thumbnailPath),
+              metadata: await storeMetadata(filePath)
+                  .then((metadata) => metadata),
+              lastsha512: await storeHash(filePath)
+                  .then((hash) => hash)
             });
           }
         }
 
-        //notify ipcRenderer of file import
+        // notify ipcRenderer of file import
         importedAssetsRequest.sender.send("importedAssetsSend", importedFiles);
       }
     } catch(e) {
@@ -56,29 +62,30 @@ ipcMain.on("importAssets", (importedAssetsRequest) => {
 });
 
 function checkIfAssetNameConflicts(newlyImportedAssetPath) {
-  for(var existingAsset of importedFiles) {
+  for(const existingAsset of importedFiles) {
     if(newlyImportedAssetPath === existingAsset.filePath) {
-      //show error dialog stopping import if asset has conflicting names
+      // show error dialog stopping import if asset has conflicting names
       dialog.showMessageBox({
         type: "error",
         title: "Error: no files were imported",
-        message: "An asset with the same filename has already been imported. Please rename the file " +
-        "you are trying to import, or delete the conflicting asset in the Media Browser to import this file."
+        message: "An asset with the same filename has already been imported. " +
+        "Please rename the file you are trying to import, or delete the " +
+        "conflicting asset in the Media Browser to import this file."
       });
 
-      //sets assetWithSameNameExists to true
+      // sets assetWithSameNameExists to true
       return true;
     }
   }
 
-  //sets assetWithSameNameExists to false
+  // sets assetWithSameNameExists to false
   return false;
 }
 
 // functions to return resolved Promise containing desired value to store
 function storeMetadata(path) {
   return new Promise((resolve, reject) => {
-    var ffmpegProcess = new ffmpeg(path);
+    const ffmpegProcess = new ffmpeg(path);
     ffmpegProcess.ffprobe((err, metadata) => {
       if(err) reject(Error(err));
       resolve(metadata);
@@ -88,10 +95,10 @@ function storeMetadata(path) {
 
 function storeHash(path) {
   return new Promise((resolve, reject) => {
-    var ffmpegProcess = new ffmpeg(path);
+    const ffmpegProcess = new ffmpeg(path);
     ffmpegProcess.ffprobe((err, metadata) => {
       if(err) reject(Error(err));
-      var hash = hasha(JSON.stringify(metadata));
+      const hash = hasha(JSON.stringify(metadata));
       resolve(hash);
     });
   });
@@ -99,13 +106,13 @@ function storeHash(path) {
 
 function extractThumbnail(path) {
   return new Promise((resolve, reject) => {
-    var thumbnailPath = "";
-    //create new ffmpeg instance for every video
-    //with path to video file
-    var ffmpegProcess = new ffmpeg(path);
+    let thumbnailPath = "";
+    // create new ffmpeg instance for every video
+    // with path to video file
+    const ffmpegProcess = new ffmpeg(path);
     ffmpegProcess.on("filenames", (filename) => {
-      //DON'T FORGET - FILENAME IS AN ARRAY OF LENGTH 1
-      //(because this function runs one file at a time)
+      // DON'T FORGET - FILENAME IS AN ARRAY OF LENGTH 1
+      // (because this function runs one file at a time)
       console.log("Generating thumbnail: " + filename[0]);
       thumbnailPath = "saved-frames-test/" + filename[0];
     }).on("end", () => {
@@ -117,9 +124,11 @@ function extractThumbnail(path) {
       if(stdout) console.error(`FFmpeg output:\n${stdout}\n\n`);
       reject(Error(err));
     }).screenshots({
-      timestamps: [JSON.stringify(Math.random()) + "%"], //random timestamp for thumbnail
+      // random timestamp for thumbnail
+      timestamps: [JSON.stringify(Math.random()) + "%"],
       count: 1,
-      filename: "thumbnail-%f", //generate file with name "thumbnail-(filename)"
+      // generate file with name "thumbnail-(filename)"
+      filename: "thumbnail-%f",
       folder: "saved-frames-test/"
     });
   });
