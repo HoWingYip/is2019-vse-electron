@@ -35,13 +35,13 @@ ipcMain.on("importAssets", (importedAssetsRequest) => {
 
           if(!assetWithSameNameExists) {
             //add files to list of imported files
+            //TODO: display import progress ("Importing file _ of _")
             importedFiles.push({
               filePath, //cool ES6 thingy to represent filePath: filePath
               filename: path.basename(filePath),
               thumbnail: await extractThumbnail(filePath).then(thumbnailPath => thumbnailPath), //.then() returns thumbnail path
               metadata: await storeMetadata(filePath).then(metadata => metadata), // .then() returns metadata
-              //TODO: make storeHash() return hash of metadata and store it here
-              lastsha512: ""
+              lastsha512: await storeHash(filePath).then(hash => hash) //.then() returns hash
             });
           }
         }
@@ -86,9 +86,14 @@ function storeMetadata(path) {
   });
 }
 
-// TODO: implement refactor for hash function
 function storeHash(path) {
   return new Promise((resolve, reject) => {
+    var ffmpegProcess = new ffmpeg(path);
+    ffmpegProcess.ffprobe((err, metadata) => {
+      if(err) reject(Error(err));
+      var hash = hasha(JSON.stringify(metadata));
+      resolve(hash);
+    });
   });
 }
 
