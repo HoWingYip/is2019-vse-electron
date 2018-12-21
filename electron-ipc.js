@@ -42,12 +42,23 @@ function displayAssets() {
     thumbnailLabel.className = "video-thumbnail-label";
     thumbnailLabel.textContent = asset.filename;
 
-    // add everything to DOM
+    // assemble completed asset table cell
     assetTableCell.appendChild(thumbnail);
     assetTableCell.appendChild(thumbnailLabel);
-    assetTable.appendChild(assetTableCell);
 
-    // TODO: use % 4 (modulo 4) to display assets in rows of 4
+    // add new row or not?
+    const assetRow = document.createElement("tr");
+    assetRow.className = "video-row";
+    // if asset will be first in row, add new row
+    if(importedFiles.indexOf(asset) % 4 === 0) {
+      assetRow.appendChild(assetTableCell);
+      assetTable.appendChild(assetRow);
+    } else {
+      // get # of row to append cell to
+      const rowNumber = Math.floor(importedFiles.indexOf(asset) / 4);
+      // append
+      document.getElementsByClassName("video-row")[rowNumber].appendChild(assetTableCell);
+    }
   }
 }
 
