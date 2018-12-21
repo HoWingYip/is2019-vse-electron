@@ -107,7 +107,7 @@ function extractThumbnail(path) {
       // DON'T FORGET - FILENAME IS AN ARRAY OF LENGTH 1
       // (because this function runs one file at a time)
       console.log("Generating thumbnail: " + filename[0]);
-      thumbnailPath = "saved-frames-test/" + filename[0];
+      thumbnailPath = "thumbnails/" + filename[0];
     }).on("end", () => {
       console.log("Thumbnail generated");
       resolve(thumbnailPath);
@@ -122,7 +122,7 @@ function extractThumbnail(path) {
       count: 1,
       // generate file with name "thumbnail-(filename)"
       filename: "thumbnail-%f",
-      folder: "saved-frames-test/"
+      folder: "thumbnails/"
     });
   });
 }
