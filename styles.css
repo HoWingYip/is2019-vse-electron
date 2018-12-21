@@ -14,9 +14,19 @@ body {
 }
 
 table, th, td {
-  border: 1px solid grey;
   border-collapse: collapse;
-  padding: 12px;
+  padding: 8px;
+}
+
+tr {
+  text-align: left;
+  vertical-align: top;
+}
+
+td {
+  border: 1px solid grey;
+  height: 100%;
+  text-align: center;
 }
 
 table {
@@ -124,7 +134,16 @@ table#assets {
 }
 
 table#assets > tbody > tr > td {
-  width: 33.3%;
+  width: 25%;
+}
+
+.video-thumbnail {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.video-thumbnail-label {
+  font-size: 13px;
 }
 
 .video-container {
@@ -250,9 +269,4 @@ table#assets > tbody > tr > td {
   height: calc(45% - 39px); /* magic value bois */
   /* was gonna put how I found it here
   but I forgot it already whoops */
-}
-
-.video-thumbnail {
-  width: 100%;
-  margin-bottom: 8px;
 }
