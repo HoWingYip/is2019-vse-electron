@@ -1,5 +1,6 @@
 //app core code, basically
 const { app, BrowserWindow } = require("electron");
+const {ipcMain} = require("electron");
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -54,9 +55,14 @@ app.on("activate", () => {
 	}
 });
 
+// Lol UI - added to main file because the win variable only works here
+ipcMain.on("window.close", () => { win.close(); });
+ipcMain.on("window.maximize", () => { win.maximize(); });
+ipcMain.on("window.restore", () => { win.unmaximize(); });
+ipcMain.on("window.minimize", () => { win.minimize(); });
+
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 // SHUT UP.
 // NO U.
-
 require("./video-handler.js");

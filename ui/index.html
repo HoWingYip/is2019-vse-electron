@@ -8,22 +8,60 @@
 
 	<body style="border: 1px solid purple;">
 		<!-- Title Bar -->
-		<div style="background-color: #222222; color: white;">
+		<div style="background-color: rgb(60, 60, 60); color: white;">
 			<div class="padding-small" style="-webkit-app-region: drag; width: calc(100vw - 330px);">
 				<img src="../icon.png" width="32" height="32" />
 				<div class="padding-small" style="display: inline-block;">CSS-VSE v0.1 - Start Page</div>
 			</div> 
 
-			<div style="display: inline-block; position: absolute; right: 0; top: 0; overflow: auto; width: 330px;">
-				<input placeholder="Help Me To..." class="black" style="border: 0px; outline: 0; padding: 5px; />
+			<div style="display: inline-block; position: absolute; right: 0; top: 0; overflow: auto; width: 328px;">
+				<input placeholder="Help Me To..." class="black padding-small" style="border: 0px; outline: 0;" />
 
 				<!-- THESE ARE JUST PLACEHOLDERS -->
 				<span style="font-weight: bold;">
-					<button class="button">_</button>
-					<button class="button">^</button>
-					<button class="button">&times;</button>
+					<button class="button" onclick="minimizeWindow();">_</button>
+					<button class="button" onclick="restoreWindow();">/</button>
+					<button class="button" onclick="closeWindow();">&times;</button>
 				</span>
 			</div>
+
+			<!-- File -->
+			<div class="dropdown-hover small">
+				<button class="button">File</button>
+				<div class="dropdown-content bar-block black">
+					<a href="#" class="bar-item button">Link 1</a>
+					<a href="#" class="bar-item button">Link 2</a>
+					<a href="#" class="bar-item button">Link 3</a>
+				</div>
+			</div>
+
+			<!-- View -->
+			<div class="dropdown-hover small">
+				<button class="button">View</button>
+				<div class="dropdown-content bar-block black">
+					<a href="#" class="bar-item button">Link 1</a>
+					<a href="#" class="bar-item button">Link 2</a>
+					<a href="#" class="bar-item button">Link 3</a>
+				</div>
+			</div>
+
+			<!-- Help -->
+			<div class="dropdown-hover small">
+				<button class="button">Help</button>
+				<div class="dropdown-content bar-block black">
+					<a href="#" class="bar-item button">Link 1</a>
+					<a href="#" class="bar-item button">Link 2</a>
+					<a href="#" class="bar-item button">Link 3</a>
+				</div>
+			</div>
 		</div>
+
+		<!-- Actual Content Area -->
+		<div style="background-color: rgb(37, 37, 37); color: lightgrey; height: calc(100vh - 78px);">
+			aaa
+		</div>
+
+		<!-- Scripts -->
+		<script src="ipc.js"></script>
 	</body>
 </html>
