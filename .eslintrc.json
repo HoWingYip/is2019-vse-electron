@@ -12,6 +12,8 @@
         "comma-dangle": ["warn", "never"],
         "keyword-spacing": "off",
         "new-cap": "off",
-        "require-jsdoc": "off"
+        "require-jsdoc": "off",
+        "semi": "warn",
+        "brace-style": "warn"
     }
 }
