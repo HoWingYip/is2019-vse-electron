@@ -2,8 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const ffmpeg = require("fluent-ffmpeg");
 const hasha = require("hasha");
-const {ipcMain} = require("electron");
-const {dialog} = require("electron");
+const {ipcMain, dialog} = require("electron");
 
 const importedFiles = [];
 
