@@ -17,6 +17,11 @@ ipcRenderer.on("importedAssetsSend", (_, newImportedFiles) => {
 
 const noAssetsPlaceholder = document.getElementsByClassName("placeholder-fullheight")[0];
 
+ipcRenderer.on("displayImportInProgress", () => {
+  // change "no assets imported" to "importing..."
+  noAssetsPlaceholder.textContent = "Importing...";
+});
+
 function displayAssets() {
   // hide the "no assets imported" placeholder
   noAssetsPlaceholder.style.display = "none";
@@ -56,13 +61,8 @@ function displayAssets() {
     } else {
       // get # of row to append cell to
       const rowNumber = Math.floor(importedFiles.indexOf(asset) / 4);
-      // append
+      // append to that row
       document.getElementsByClassName("video-row")[rowNumber].appendChild(assetTableCell);
     }
   }
 }
-
-ipcRenderer.on("displayImportInProgress", () => {
-  // change "no assets imported" to "importing..."
-  noAssetsPlaceholder.textContent = "Importing...";
-});
