@@ -83,13 +83,15 @@ window.onload = () => {
   const timelineDurationIndicator = document.getElementById("timelineDuration");
 
   // show timeline video duration
-  if(timelineVideo.duration < 60) {
-    timelineDurationIndicator.textContent = "0:" + Math.floor(timelineVideo.duration);
-  } else if (timelineVideo.duration >= 60) {
-    const timelineDurationMinutes = Math.floor(timelineVideo.duration / 60);
-    const timelineDurationSeconds = Math.floor(timelineVideo.duration - timelineDurationMinutes * 60);
-    timelineDurationIndicator.textContent = timelineDurationMinutes + ":" + timelineDurationSeconds;
-  }
+  timelineVideo.addEventListener("durationchange", () => {
+    if(timelineVideo.duration < 60) {
+      timelineDurationIndicator.textContent = "0:" + Math.floor(timelineVideo.duration);
+    } else if (timelineVideo.duration >= 60) {
+      const timelineDurationMinutes = Math.floor(timelineVideo.duration / 60);
+      const timelineDurationSeconds = Math.floor(timelineVideo.duration - timelineDurationMinutes * 60);
+      timelineDurationIndicator.textContent = timelineDurationMinutes + ":" + timelineDurationSeconds;
+    }
+  });
 
   // update timeline current time indicator
   timelineVideo.addEventListener("timeupdate", () => {
@@ -107,13 +109,15 @@ window.onload = () => {
   const sourceDurationIndicator = document.getElementById("sourceDuration");
 
   // show source video duration
-  if(sourceVideo.duration < 60) {
-    sourceDurationIndicator.textContent = "0:" + Math.floor(sourceVideo.duration);
-  } else if (sourceVideo.duration >= 60) {
-    const sourceDurationMinutes = Math.floor(sourceVideo.duration / 60);
-    const sourceDurationSeconds = Math.floor(sourceVideo.duration - sourceDurationMinutes * 60);
-    sourceDurationIndicator.textContent = sourceDurationMinutes + ":" + sourceDurationSeconds;
-  }
+  sourceVideo.addEventListener("durationchange", () => {
+    if(sourceVideo.duration < 60) {
+      sourceDurationIndicator.textContent = "0:" + Math.floor(sourceVideo.duration);
+    } else if (sourceVideo.duration >= 60) {
+      const sourceDurationMinutes = Math.floor(sourceVideo.duration / 60);
+      const sourceDurationSeconds = Math.floor(sourceVideo.duration - sourceDurationMinutes * 60);
+      sourceDurationIndicator.textContent = sourceDurationMinutes + ":" + sourceDurationSeconds;
+    }
+  });
 
   // update source current time indicator
   sourceVideo.addEventListener("timeupdate", () => {
