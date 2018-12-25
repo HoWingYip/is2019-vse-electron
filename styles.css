@@ -163,6 +163,7 @@ table#assets > tbody > tr > td::-webkit-scrollbar-thumb:active {
 }
 
 .video-container {
+  margin-top: 16px;
   height: 77%;
 }
 
@@ -196,7 +197,7 @@ table#assets > tbody > tr > td::-webkit-scrollbar-thumb:active {
 }
 
 .placeholder {
-  top: 37%;
+  top: 40%;
 }
 
 .placeholder-fullheight {
