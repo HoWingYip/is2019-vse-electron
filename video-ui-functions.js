@@ -91,6 +91,7 @@ window.onload = () => {
       const timelineDurationSeconds = Math.floor(timelineVideo.duration - timelineDurationMinutes * 60);
       timelineDurationIndicator.textContent = timelineDurationMinutes + ":" + timelineDurationSeconds;
     }
+    timelineScrubber.value = 0;
   });
 
   // update timeline current time indicator
@@ -117,6 +118,7 @@ window.onload = () => {
       const sourceDurationSeconds = Math.floor(sourceVideo.duration - sourceDurationMinutes * 60);
       sourceDurationIndicator.textContent = sourceDurationMinutes + ":" + sourceDurationSeconds;
     }
+    sourceScrubber.value = 0;
   });
 
   // update source current time indicator
