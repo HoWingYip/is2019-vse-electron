@@ -97,4 +97,8 @@ function displayAssetInPlayer(assetPath) {
   const sourceVideoContainer = document.getElementsByClassName("video-container")[0];
   // remove source video container's dotted border
   sourceVideoContainer.style.border = "none";
+
+  const sourceScrubber = document.getElementById("sourceScrubber");
+  // set video scrubber to start point (for some reason it keeps setting to 50%)
+  sourceScrubber.value = 0;
 }
