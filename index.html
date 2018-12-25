@@ -9,7 +9,7 @@
   <title>Editor UI Demo</title>
 </head>
 <body>
-  <div class="video-panel">
+  <div class="video-panel panel">
     <div class="panel-container" id="panel-container-source">
       <span class="placeholder">Select a video</span>
       <div class="video-container">
@@ -18,7 +18,7 @@
       </div>
       <div class="controls">
         <div class="timer" id="sourceCurrentTime">0:00</div>
-        <input type="range" class="scrubber" id="sourceScrubber" value="0">
+        <input type="range" class="scrubber" id="sourceScrubber" value="0" step="any">
         <div class="timer" id="sourceDuration"></div>
         <br>
         <img src="icons/pngs/SkipToStart.png" alt="Skip to start" class="control-button" width="27px" height="25px" id="sourceSkipToStart"
@@ -46,7 +46,7 @@
       </div>
     </div>
   </div>
-  <div class="video-panel-second">
+  <div class="video-panel-second panel">
     <div class="panel-container" id="panel-container-timeline">
       <span class="placeholder">No clips in timeline</span>
       <div class="video-container">
@@ -55,7 +55,7 @@
       </div>
       <div class="controls">
         <div class="timer" id="timelineCurrentTime">0:00</div>
-        <input type="range" class="scrubber" id="timelineScrubber" value="0">
+        <input type="range" class="scrubber" id="timelineScrubber" value="0" step="any">
         <div class="timer" id="timelineDuration"></div>
         <br>
         <img src="icons/pngs/SkipToStart.png" alt="Skip to start" class="control-button" width="27px" height="25px" id="timelineSkipToStart"
@@ -75,7 +75,7 @@
     <div class="switcher-panel" id="switchSource" onclick="switchSource()">Source</div>
     <div class="switcher-panel" id="switchMedia" onclick="switchMedia()">Media Browser</div>
   </div>
-  <div class="panel colour-palette">
+  <div class="colour-palette panel bottom-row-panel">
     Colour Palette
   </div>
   <script src="video-ui-functions.js"></script>
