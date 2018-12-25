@@ -11,18 +11,21 @@ ipcRenderer.on("importedAssetsSend", (_, newImportedFiles) => {
   console.log(newImportedFiles);
   // if there are imported assets, display them!
   if(importedFiles.length > 0) {
-    displayAssets();
+    showImportedAssets();
   }
 });
 
 const noAssetsPlaceholder = document.getElementsByClassName("placeholder-fullheight")[0];
+const assetTableContainer = document.getElementsByClassName("fullheight-dotted-container")[0];
 
 ipcRenderer.on("displayImportInProgress", () => {
   // change "no assets imported" to "importing..."
   noAssetsPlaceholder.textContent = "Importing...";
+  // stop showing import dialog on click
+  assetTableContainer.onclick = null;
 });
 
-function displayAssets() {
+function showImportedAssets() {
   // hide the "no assets imported" placeholder
   noAssetsPlaceholder.style.display = "none";
   // display table of assets
@@ -35,12 +38,18 @@ function displayAssets() {
 
     // create table cell to contain asset
     const assetTableCell = document.createElement("td");
+    // show asset filename on hover
+    assetTableCell.title = asset.filename;
+    // display asset in video player on double click
+    assetTableCell.ondblclick = () => {
+      displayAssetInPlayer(asset.filePath);
+    };
 
     // create img element for thumbnail
     const thumbnail = document.createElement("img");
     thumbnail.className = "video-thumbnail";
     thumbnail.src = asset.thumbnail;
-    thumbnail.alt = "Thumbnail";
+    thumbnail.alt = asset.filename;
 
     // create element to display asset name
     const thumbnailLabel = document.createElement("div");
@@ -65,4 +74,25 @@ function displayAssets() {
       document.getElementsByClassName("video-row")[rowNumber].appendChild(assetTableCell);
     }
   }
+}
+
+function displayAssetInPlayer(assetPath) {
+  // switch to source video panel
+  switchSource();
+
+  const sourcePlaceholder = document.getElementsByClassName("placeholder")[0];
+  // hide "Select a video" placeholder
+  sourcePlaceholder.style.display = "none";
+
+  const sourceVideo = document.getElementById("source-video");
+  // put video into video player!
+  sourceVideo.src = assetPath;
+  // make video easier to differentiate from background by adding border & background colour
+  sourceVideo.style.border = "1px solid grey";
+  sourceVideo.style.backgroundColor = "#585858";
+  // TODO: add padding (?)
+
+  const sourceVideoContainer = document.getElementsByClassName("video-container")[0];
+  // remove source video container's dotted border
+  sourceVideoContainer.style.border = "none";
 }
