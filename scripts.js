@@ -87,10 +87,12 @@ function displayAssetInPlayer(assetPath) {
   const sourceVideo = document.getElementById("source-video");
   // put video into video player!
   sourceVideo.src = assetPath;
-  // make video easier to differentiate from background by adding border & background colour
-  sourceVideo.style.border = "1px solid grey";
-  sourceVideo.style.backgroundColor = "#585858";
-  // TODO: add padding (?)
+
+  // takes away width="100%" attribute of video to prevent unintentional letterboxing/pillarboxing in UI
+  sourceVideo.width = "auto";
+  // aligns video to centre
+  sourceVideo.style.marginLeft = "auto";
+  sourceVideo.style.marginRight = "auto";
 
   const sourceVideoContainer = document.getElementsByClassName("video-container")[0];
   // remove source video container's dotted border
