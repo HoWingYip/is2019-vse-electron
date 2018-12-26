@@ -97,7 +97,26 @@ function displayAssetInPlayer(assetPath) {
   const sourceVideoContainer = document.getElementsByClassName("video-container")[0];
   // remove source video container's dotted border
   sourceVideoContainer.style.border = "none";
-
-  const sourceScrubber = document.getElementById("sourceScrubber");
-  // set video scrubber to start point (for some reason it keeps setting to 50%)
 }
+
+/* panel focus/highlighting function */
+
+document.addEventListener("click", (event) => {
+  const panels = document.getElementsByClassName("panel");
+
+  function removeFocusAllPanels() {
+    for(const panel of panels) {
+      panel.classList.remove("panel-focus");
+    }
+  }
+
+  if(event.target.closest(".panel")) {
+    // if clicked region has a panel as nth-level ancestor:
+    removeFocusAllPanels();
+    // ...and focus that panel
+    const panelToFocus = event.target.closest(".panel");
+    panelToFocus.classList.add("panel-focus");
+  } else {
+    removeFocusAllPanels();
+  }
+});

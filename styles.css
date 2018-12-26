@@ -44,8 +44,8 @@ table {
   user-select: none;
 }
 
-.video-panel, .video-panel-second, .panel {
-  padding: 24px;
+.panel-focus {
+  border: 2px solid #2196f3;
 }
 
 .video-panel-second, .panel {
