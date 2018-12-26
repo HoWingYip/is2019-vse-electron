@@ -11,6 +11,9 @@ body {
   padding: 16px;
   /* overrides default w3.css */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+
+  /* prevents accidental highlighting of weird bits of the page */
+  user-select: none;
 }
 
 table, th, td {
@@ -38,9 +41,6 @@ table {
   vertical-align: top;
 
   /* disallow selection within panels */
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
   user-select: none;
 }
 
@@ -48,7 +48,8 @@ table {
   border: 2px solid #2196f3;
 }
 
-.video-panel-second, .panel {
+.panel {
+  padding: 24px;
   border-radius: 4px;
 }
 
@@ -238,10 +239,6 @@ table#assets > tbody > tr > td::-webkit-scrollbar-thumb:active {
   
   /* disallow dragging */
   user-select: none;
-  -moz-user-select: none;
-  -webkit-user-drag: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
 }
 
 .scrubber {
