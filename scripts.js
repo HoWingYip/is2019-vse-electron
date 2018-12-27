@@ -38,8 +38,10 @@ function showImportedAssets() {
 
     // create table cell to contain asset
     const assetTableCell = document.createElement("td");
+    assetTableCell.className = "asset-tile";
     // show asset filename on hover
     assetTableCell.title = asset.filename;
+
     // display asset in video player on double click
     assetTableCell.ondblclick = () => {
       displayAssetInPlayer(asset.filePath);
@@ -75,6 +77,8 @@ function showImportedAssets() {
     }
   }
 }
+
+/* display assets in video player function */
 
 function displayAssetInPlayer(assetPath) {
   // switch to source video panel
@@ -120,3 +124,30 @@ document.addEventListener("click", (event) => {
     removeFocusAllPanels();
   }
 });
+
+/* asset tile focus/highlighting function */
+
+document.addEventListener("click", (event) => {
+  const assetTiles = document.getElementsByClassName("asset-tile");
+
+  function removeFocusAllTiles() {
+    for(const tile of assetTiles) {
+      tile.classList.remove("asset-tile-focus");
+    }
+  }
+
+  if(event.target.closest(".asset-tile")) {
+    // if clicked region has an asset tile as nth-level ancestor:
+    removeFocusAllTiles();
+    // ...and focus that tile
+    const tileToFocus = event.target.closest(".asset-tile");
+    tileToFocus.classList.add("asset-tile-focus");
+  } else {
+    removeFocusAllTiles();
+  }
+});
+
+// TODO: Implement multi-selection of assets when Ctrl/Cmd key is down
+// TODO: Implement multi-selection of range of assets with Shift key
+// TODO: Have an array of assets currently selected
+// TODO: Implement asset deletion (includes multi-selected assets) - implement other actions later
