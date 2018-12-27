@@ -137,7 +137,7 @@ table#assets > tbody > tr > td {
   display: inline-block;
   height: 175px;
   overflow: auto;
-  border: 1px solid grey;
+  border: 1px solid #9c9c9c;
   text-align: center;
 }
 
