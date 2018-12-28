@@ -37,9 +37,9 @@ ipcMain.on("importAssets", (importedAssetsRequest) => {
             importedFiles.push({
               filePath, // cool ES6 thingy to represent filePath: filePath
               filename: path.basename(filePath),
-              thumbnail: await extractThumbnail(filePath).then((thumbnailPath) => thumbnailPath),
-              metadata: await storeMetadata(filePath).then((metadata) => metadata),
-              lastsha512: await storeHash(filePath).then((hash) => hash)
+              thumbnail: await extractThumbnail(filePath),
+              metadata: await storeMetadata(filePath),
+              lastsha512: await storeHash(filePath)
             });
           }
         }
