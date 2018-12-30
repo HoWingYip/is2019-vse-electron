@@ -27,9 +27,33 @@ ipcMain.on("importAssets", (importedAssetsRequest) => {
         // change "no assets imported" to "importing..."
         importedAssetsRequest.sender.send("displayImportInProgress");
 
+        console.time("Whole import");
+
         for(const filePath of files) {
           // check if asset(s) with same name exist(s)
           const assetWithSameNameExists = checkIfAssetNameConflicts(filePath);
+
+          // slower Promise.all() implementation
+          /*
+          if(!assetWithSameNameExists) {
+            // store thumbnail path, metadata & hash
+            const [thumbnail, metadata, lastsha512] = await Promise.all([
+              extractThumbnail(filePath),
+              storeMetadata(filePath),
+              storeHash(filePath)
+            ]);
+
+            // add files to list of imported files
+            // TODO: display import progress ("Importing file _ of _")
+            importedFiles.push({
+              filePath, // cool ES6 thingy to represent filePath: filePath
+              filename: path.basename(filePath),
+              thumbnail,
+              metadata,
+              lastsha512
+            });
+          }
+          */
 
           if(!assetWithSameNameExists) {
             // add files to list of imported files
@@ -43,6 +67,8 @@ ipcMain.on("importAssets", (importedAssetsRequest) => {
             });
           }
         }
+
+        console.timeEnd("Whole import");
 
         // notify ipcRenderer of file import
         importedAssetsRequest.sender.send("importedAssetsSend", importedFiles);
