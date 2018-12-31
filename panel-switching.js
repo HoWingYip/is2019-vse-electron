@@ -19,7 +19,7 @@ function switchSource() {
   // un-highlight media browser tab by taking away gradient
   mediaSwitcher.style.backgroundImage = "none";
   // darken media browser tab text colour
-  mediaSwitcher.getElementById("switchMedia").style.color = "rgb(185, 185, 185)";
+  mediaSwitcher.style.color = "rgb(185, 185, 185)";
 }
 
 // switch to media panel in div.video-panel
