@@ -15,6 +15,7 @@
         "require-jsdoc": "off",
         "semi": "warn",
         "brace-style": "warn",
-        "padded-blocks": "off"
+        "padded-blocks": "off",
+        "prefer-const": "warn"
     }
 }
