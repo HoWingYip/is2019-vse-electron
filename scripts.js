@@ -1,6 +1,7 @@
 const {ipcRenderer} = require("electron");
 
 let importedFiles = [];
+let selectedFiles = [];
 
 function importAssets() {
   ipcRenderer.send("importAssets");
@@ -136,26 +137,45 @@ document.addEventListener("click", (event) => {
     }
   }
 
+  function singleTileSelect() {
+    const tileToFocus = event.target.closest(".asset-tile");
+    tileToFocus.classList.add("asset-tile-focus");
+  }
+
   if(event.target.closest(".asset-tile")) {
     // if click was within a tile...
 
     if(!event.ctrlKey && !event.shiftKey) {
       // no multi-selection
-      removeFocusAllTiles();
 
-      const tileToFocus = event.target.closest(".asset-tile");
-      tileToFocus.classList.add("asset-tile-focus");
+      // deselect all tiles
+      removeFocusAllTiles();
+      // select the clicked one
+      singleTileSelect();
+
+    } else if(event.ctrlKey) {
+      // ctrl key was down: multi-selection
+
+      // add clicked tile to selection
+      singleTileSelect();
 
     } else if(event.shiftKey) {
       // shift key was down: multi-selection
+
+      // if no tiles have been selected, treat this like a normal selection
+      // otherwise, "Uncaught TypeError: Cannot read property 'classList' of undefined" is thrown
+      if(selectedFiles.length === 0) {
+        singleTileSelect();
+        return;
+      }
 
       // get index of clicked asset
       // spread operator is used in order to be able to use indexOf on a NodeList
       const clickedAssetIndex = [...assetTiles].indexOf(event.target.closest(".asset-tile"));
 
       // get index of currently focused tile
-      const currentlyFocusedAsset = document.getElementsByClassName("asset-tile-focus")[0];
-      const firstFocusedAssetIndex = [...assetTiles].indexOf(currentlyFocusedAsset);
+      const firstFocusedAsset = document.getElementsByClassName("asset-tile-focus")[0];
+      const firstFocusedAssetIndex = [...assetTiles].indexOf(firstFocusedAsset);
 
       if(clickedAssetIndex < firstFocusedAssetIndex) {
         for(let tileNumberToFocus = clickedAssetIndex; tileNumberToFocus < firstFocusedAssetIndex; tileNumberToFocus++) {
@@ -167,8 +187,7 @@ document.addEventListener("click", (event) => {
         for(let tileNumberToFocus = firstFocusedAssetIndex; tileNumberToFocus < clickedAssetIndex + 1; tileNumberToFocus++) {
           // selects every tile from currently focused tile UP to clicked tile
           // (if currently focused tile comes before clicked tile)
-          // clickedAssetIndex + 1 is because arrays start at 0
-          // I'm looking at you, r/ProgrammerHumor
+          // clickedAssetIndex + 1 is to select all tiles up to AND INCLUDING the clicked one
           assetTiles[tileNumberToFocus].classList.add("asset-tile-focus");
         }
       }
@@ -176,9 +195,13 @@ document.addEventListener("click", (event) => {
     // event.ctrlKey was not dealt with because it requires nothing special
     // (it just selects whichever tile was clicked)
 
-    // TODO: store selected assets in array
+    // store selected assets in array
+    const focusedAssetTiles = document.getElementsByClassName("asset-tile-focus");
+    // another two spread operators since NodeLists have neither map() nor indexOf() methods
+    selectedFiles = [...focusedAssetTiles].map((asset) => [...assetTiles].indexOf(asset));
   } else {
     removeFocusAllTiles();
+    selectedFiles = [];
   }
 });
 
