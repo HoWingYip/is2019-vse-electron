@@ -27,8 +27,6 @@ ipcMain.on("importAssets", (importedAssetsRequest) => {
         // change "no assets imported" to "importing..."
         importedAssetsRequest.sender.send("displayImportInProgress");
 
-        console.time("Whole import");
-
         for(const filePath of files) {
           // check if asset(s) with same name exist(s)
           const assetWithSameNameExists = checkIfAssetNameConflicts(filePath);
@@ -45,8 +43,6 @@ ipcMain.on("importAssets", (importedAssetsRequest) => {
             });
           }
         }
-
-        console.timeEnd("Whole import");
 
         // notify ipcRenderer of file import
         importedAssetsRequest.sender.send("importedAssetsSend", importedFiles);
