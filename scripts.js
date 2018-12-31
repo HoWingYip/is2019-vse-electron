@@ -137,17 +137,49 @@ document.addEventListener("click", (event) => {
   }
 
   if(event.target.closest(".asset-tile")) {
-    // if clicked region has an asset tile as nth-level ancestor:
-    removeFocusAllTiles();
-    // ...and focus that tile
-    const tileToFocus = event.target.closest(".asset-tile");
-    tileToFocus.classList.add("asset-tile-focus");
+    // if click was within a tile...
+
+    if(!event.ctrlKey && !event.shiftKey) {
+      // no multi-selection
+      removeFocusAllTiles();
+
+      const tileToFocus = event.target.closest(".asset-tile");
+      tileToFocus.classList.add("asset-tile-focus");
+
+    } else if(event.shiftKey) {
+      // shift key was down: multi-selection
+
+      // get index of clicked asset
+      // spread operator is used in order to be able to use indexOf on a NodeList
+      const clickedAssetIndex = [...assetTiles].indexOf(event.target.closest(".asset-tile"));
+
+      // get index of currently focused tile
+      const currentlyFocusedAsset = document.getElementsByClassName("asset-tile-focus")[0];
+      const firstFocusedAssetIndex = [...assetTiles].indexOf(currentlyFocusedAsset);
+
+      if(clickedAssetIndex < firstFocusedAssetIndex) {
+        for(let tileNumberToFocus = clickedAssetIndex; tileNumberToFocus < firstFocusedAssetIndex; tileNumberToFocus++) {
+          // selects every tile from clicked tile UP to currently focused tile
+          // (if clicked tile comes before currently focused tile)
+          assetTiles[tileNumberToFocus].classList.add("asset-tile-focus");
+        }
+      } else if(firstFocusedAssetIndex < clickedAssetIndex) {
+        for(let tileNumberToFocus = firstFocusedAssetIndex; tileNumberToFocus < clickedAssetIndex + 1; tileNumberToFocus++) {
+          // selects every tile from currently focused tile UP to clicked tile
+          // (if currently focused tile comes before clicked tile)
+          // clickedAssetIndex + 1 is because arrays start at 0
+          // I'm looking at you, r/ProgrammerHumor
+          assetTiles[tileNumberToFocus].classList.add("asset-tile-focus");
+        }
+      }
+    }
+    // event.ctrlKey was not dealt with because it requires nothing special
+    // (it just selects whichever tile was clicked)
+
+    // TODO: store selected assets in array
   } else {
     removeFocusAllTiles();
   }
 });
 
-// TODO: Implement multi-selection of assets when Ctrl/Cmd key is down
-// TODO: Implement multi-selection of range of assets with Shift key
-// TODO: Have an array of assets currently selected
 // TODO: Implement asset deletion (includes multi-selected assets) - implement other actions later
