@@ -205,4 +205,26 @@ document.addEventListener("click", (event) => {
   }
 });
 
+/* select all assets function (Ctrl-A) */
+
+document.addEventListener("keydown", (event) => {
+  const mediaSwitcher = document.getElementById("switchMedia");
+  const leftVideoPanel = document.getElementsByClassName("video-panel")[0];
+
+  // checks for Ctrl-A
+  if(event.ctrlKey && event.key === "a"
+    // checks that left panel is focused
+    && leftVideoPanel.classList.contains("panel-focus")
+    // checks that left panel is displaying media browser
+    // (and not source video)
+    && mediaSwitcher.classList.contains("panel-switcher-enabled")) {
+
+    const assetTiles = document.getElementsByClassName("asset-tile");
+    for(const tile of assetTiles) {
+      tile.classList.add("asset-tile-focus");
+    }
+
+  }
+});
+
 // TODO: Implement asset deletion (includes multi-selected assets) - implement other actions later
