@@ -11,15 +11,10 @@ function switchSource() {
   // hide media browser
   mediaPanelContainer.style.display = "none";
 
-  // highlight source video tab by applying gradient
-  sourceSwitcher.style.backgroundImage = "linear-gradient(rgb(75, 75, 75), rgb(95, 95, 95))";
-  // brighten source video tab text colour
-  sourceSwitcher.style.color = "rgb(209, 209, 209)";
-
-  // un-highlight media browser tab by taking away gradient
-  mediaSwitcher.style.backgroundImage = "none";
-  // darken media browser tab text colour
-  mediaSwitcher.style.color = "rgb(185, 185, 185)";
+  // enable source switcher
+  sourceSwitcher.classList.add("panel-switcher-enabled");
+  // disable media switcher
+  mediaSwitcher.classList.remove("panel-switcher-enabled");
 }
 
 // switch to media panel in div.video-panel
@@ -29,13 +24,8 @@ function switchMedia() {
   // display media browser
   mediaPanelContainer.style.display = "inline-block";
 
-  // un-highlight source video tab by taking away gradient
-  sourceSwitcher.style.backgroundImage = "none";
-  // darken source video tab text colour
-  sourceSwitcher.style.color = "rgb(185, 185, 185)";
-
-  // highlight media browser tab by applying gradient
-  mediaSwitcher.style.backgroundImage = "linear-gradient(rgb(75, 75, 75), rgb(95, 95, 95))";
-  // brighten media browser tab text colour
-  mediaSwitcher.style.color = "rgb(209, 209, 209)";
+  // disable source switcher
+  sourceSwitcher.classList.remove("panel-switcher-enabled");
+  // enable media switcher
+  mediaSwitcher.classList.add("panel-switcher-enabled");
 }

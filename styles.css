@@ -92,13 +92,13 @@ table {
   z-index: 2;
 }
 
-#switchSource {
-  background-image: linear-gradient(rgb(75, 75, 75), rgb(95, 95, 95));
-  color: rgb(209, 209, 209);
-}
-
 #switchMedia {
   left: 5.7em;
+}
+
+.panel-switcher-enabled {
+  background-image: linear-gradient(rgb(75, 75, 75), rgb(95, 95, 95));
+  color: rgb(209, 209, 209);
 }
 
 video {
