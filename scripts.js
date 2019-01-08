@@ -192,8 +192,6 @@ document.addEventListener("click", (event) => {
         }
       }
     }
-    // event.ctrlKey was not dealt with because it requires nothing special
-    // (it just selects whichever tile was clicked)
 
     // store selected assets in array
     const focusedAssetTiles = document.getElementsByClassName("asset-tile-focus");
