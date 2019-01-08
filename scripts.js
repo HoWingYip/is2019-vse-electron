@@ -227,4 +227,9 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
+window.oncontextmenu = (event) => {
+  event.preventDefault();
+  console.log("ayy");
+};
+
 // TODO: Implement asset deletion (includes multi-selected assets) - implement other actions later
