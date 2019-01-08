@@ -24,6 +24,8 @@ ipcRenderer.on("displayImportInProgress", () => {
   noAssetsPlaceholder.textContent = "Importing...";
   // stop showing import dialog on click
   assetTableContainer.onclick = null;
+  // only show import dialog on double click
+  assetTableContainer.ondblclick = importAssets;
 });
 
 function showImportedAssets() {
