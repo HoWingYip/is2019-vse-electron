@@ -293,3 +293,35 @@ table#assets > tbody > tr > td::-webkit-scrollbar-thumb:active {
   /* was gonna put how I found it here
   but I forgot it already whoops */
 }
+
+.context-menu {
+  background-color: grey;
+
+  /* positioned exactly at clicked point */
+  position: absolute;
+
+  padding-top: 3px;
+  padding-bottom: 3px;
+  border-radius: 5px;
+  overflow: hidden;
+  font-size: 14px;
+
+  /* emphasise on this */
+  box-shadow: 0 5px 8px 0 #00000033;
+}
+
+.context-menu-option {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.context-menu-option:hover {
+  background-color: #6e6e6e;
+}
+
+.assets-context-menu {
+  left: 500px;
+  top: 200px;
+}
