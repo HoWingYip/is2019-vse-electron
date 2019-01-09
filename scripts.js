@@ -92,7 +92,7 @@ function showImportedAssets() {
 
 /* display assets in video player function */
 
-function displayAssetInPlayer(assetPath) {
+function displayAssetInSourcePlayer(assetPath) {
   // switch to source video panel
   switchSource();
 
@@ -113,6 +113,9 @@ function displayAssetInPlayer(assetPath) {
   const sourceVideoContainer = document.getElementsByClassName("video-container")[0];
   // remove source video container's border
   sourceVideoContainer.style.border = "none";
+
+  // plays the video
+  sourceVideo.play();
 }
 
 /* panel focus/highlighting function */
