@@ -40,11 +40,9 @@ function showImportedAssets() {
   // display table of assets
   document.getElementById("assets").style.display = "table";
   // clear table before re-displaying all assets
-  document.querySelector("table#assets > tbody").innerHTML = "";
+  assetTable.innerHTML = "";
   // display the damn assets already!
   for(const asset of importedFiles) {
-    const assetTable = document.querySelector("table#assets > tbody");
-
     // create table cell to contain asset
     const assetTableCell = document.createElement("td");
     assetTableCell.className = "asset-tile";
