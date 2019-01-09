@@ -4,7 +4,7 @@ html, body {
 }
 
 html {
-  background-color: rgb(48, 48, 48);
+  background-color: #303030;
 }
 
 body {
@@ -34,8 +34,8 @@ table {
 
 /* specialised code for other elements */
 .video-panel, .video-panel-second, .panel, .switcher-panel {
-  background-color: rgb(75, 75, 75);
-  color: rgb(185, 185, 185);
+  background-color: #4b4b4b;
+  color: #b9b9b9;
   display: inline-block;
   overflow: hidden;
   vertical-align: top;
@@ -78,7 +78,7 @@ table {
 
 .panel-selector-container {
   height: 1em;
-  background-color: rgb(48, 48, 48);
+  background-color: #303030;
 }
 
 .switcher-panel {
@@ -97,8 +97,8 @@ table {
 }
 
 .panel-switcher-enabled {
-  background-image: linear-gradient(rgb(75, 75, 75), rgb(95, 95, 95));
-  color: rgb(209, 209, 209);
+  background-image: linear-gradient(#4b4b4b, #5f5f5f);
+  color: #d1d1d1;
 }
 
 video {
@@ -155,11 +155,11 @@ table#assets > tbody > tr > td::-webkit-scrollbar-thumb {
 }
 
 table#assets > tbody > tr > td::-webkit-scrollbar-thumb:hover {
-  background-color: rgb(150, 150, 150);
+  background-color: #969696;
 }
 
 table#assets > tbody > tr > td::-webkit-scrollbar-thumb:active {
-  background-color: rgb(114, 114, 114);
+  background-color: #727272;
 }
 
 .video-thumbnail {
@@ -192,11 +192,11 @@ table#assets > tbody > tr > td::-webkit-scrollbar-thumb:active {
 }
 
 .fullheight-dotted-container::-webkit-scrollbar-thumb:hover {
-  background-color: rgb(150, 150, 150);
+  background-color: #969696;
 }
 
 .fullheight-dotted-container::-webkit-scrollbar-thumb:active {
-  background-color: rgb(114, 114, 114);
+  background-color: #727272;
 }
 
 .placeholder, .placeholder-fullheight {
@@ -258,13 +258,13 @@ table#assets > tbody > tr > td::-webkit-scrollbar-thumb:active {
   -webkit-appearance: none;
   appearance: none;
   height: 4px;
-  background-color: rgb(178, 178, 178);
+  background-color: #b2b2b2;
   outline: none; 
   /* to retain accessibility, the background colour changes, as below. */
 }
 
 .scrubber:hover, .scrubber::-webkit-slider-thumb:hover {
-  background-color: rgb(255, 255, 255);
+  background-color: #ffffff;
 }
 
 .scrubber::-webkit-slider-thumb {
@@ -272,7 +272,7 @@ table#assets > tbody > tr > td::-webkit-scrollbar-thumb:active {
   appearance: none;
   width: 15px;
   height: 15px;
-  background: rgb(178, 178, 178);
+  background: #b2b2b2;
   border-radius: 50%;
   border: 1px solid grey;
   cursor: pointer;
