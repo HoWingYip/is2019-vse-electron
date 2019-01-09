@@ -32,6 +32,11 @@ ipcRenderer.on("displayImportInProgress", () => {
 function showImportedAssets() {
   // hide the "no assets imported" placeholder
   noAssetsPlaceholder.style.display = "none";
+  // hide border of table container
+  assetTableContainer.style.border = "none";
+  // table inherits border-radius from panel for some reason
+  // time to remove that!
+  assetTableContainer.style.borderRadius = 0;
   // display table of assets
   document.getElementById("assets").style.display = "table";
   // clear table before re-displaying all assets
