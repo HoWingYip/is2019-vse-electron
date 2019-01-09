@@ -2,68 +2,60 @@ const fs = require("fs");
 const path = require("path");
 const ffmpeg = require("fluent-ffmpeg");
 const hasha = require("hasha");
-const {ipcMain, dialog} = require("electron");
+const {ipcMain} = require("electron");
+
+const dialogs = require("./dialogs.js");
 
 const importedFiles = [];
 
 // show import dialog on click of import area
-ipcMain.on("importAssets", (importedAssetsRequest) => {
-  dialog.showOpenDialog({
-    title: "Import",
-    defaultPath: "~/",
-    buttonLabel: "Import",
-    filters: [
-      {name: "All Supported Files", extensions: ["mp4", "mov", "ogg", "webm", "m4v", "wav", "mp3", "webm", "aac", "flac", "m4a", "ogg", "oga", "opus", "png", "jpg", "jpeg", "bmp", "gif", "webp"]},
-      {name: "Video Files", extensions: ["mp4", "mov", "ogg", "webm", "m4v"]},
-      {name: "Audio Files", extensions: ["wav", "mp3", "webm", "aac", "flac", "m4a", "ogg", "oga", "opus"]},
-      {name: "Image Files", extensions: ["png", "jpg", "jpeg", "bmp", "gif", "webp"]}
-    ],
-    properties: ["openFile", "multiSelections"]
-  }, async (files) => {
-    try {
-      // check that import was not cancelled
-      // to avoid throwing "files is not iterable"
-      if(files !== undefined) {
-        // change "no assets imported" to "importing..."
-        importedAssetsRequest.sender.send("displayImportInProgress");
+ipcMain.on("importAssets", async (importedAssetsRequest) => {
+  // get files selected in dialog
+  const files = dialogs.showImportDialog();
+  try {
+    // check that import was not cancelled
+    // to avoid throwing "files is not iterable"
+    if(files !== undefined) {
+      // change "no assets imported" to "importing..."
+      importedAssetsRequest.sender.send("displayImportInProgress");
 
-        for(const filePath of files) {
-          // check if asset(s) with same name exist(s)
-          const assetWithSameNameExists = checkIfAssetNameConflicts(filePath);
+      // check if asset(s) with same name exist(s)
+      const assetWithSameNameExists = checkIfAssetNameConflicts(files);
 
-          if(!assetWithSameNameExists) {
-            // add files to list of imported files
-            // TODO: display import progress ("Importing file _ of _")
-            importedFiles.push({
-              filePath, // cool ES6 thingy to represent filePath: filePath
-              filename: path.basename(filePath),
-              thumbnail: await extractThumbnail(filePath),
-              metadata: await storeMetadata(filePath),
-              lastsha512: await storeHash(filePath)
-            });
-          }
+      for(const filePath of files) {
+        if(!assetWithSameNameExists) {
+          // add files to list of imported files
+          // TODO: display import progress ("Importing file _ of _")
+          importedFiles.push({
+            filePath, // cool ES6 thingy to represent filePath: filePath
+            filename: path.basename(filePath),
+            thumbnail: await extractThumbnail(filePath), // replace with `thumbnails/thumbnail-${path.basename(filePath)}`
+            metadata: await storeMetadata(filePath),
+            lastsha512: await storeHash(filePath)
+          });
         }
-
-        // notify ipcRenderer of file import
-        importedAssetsRequest.sender.send("importedAssetsSend", importedFiles);
       }
-    } catch(e) {
-      console.error(e);
+
+      if(!assetWithSameNameExists) {
+        // put concurrent thumbnail generation code here
+        // edit thumbnail function to accept whole files array
+        // await returned Promise before displaying assets
+      }
+
+      // notify ipcRenderer of file import
+      importedAssetsRequest.sender.send("importedAssetsSend", importedFiles);
     }
-  });
+  } catch(e) {
+    console.error(e);
+  }
 });
 
-function checkIfAssetNameConflicts(newlyImportedAssetPath) {
-  for(const existingAsset of importedFiles) {
-    if(newlyImportedAssetPath === existingAsset.filePath) {
+function checkIfAssetNameConflicts(newlyImportedAssets) {
+  const existingAssetFilenames = importedFiles.map((asset) => asset.filePath);
+  for(const newlyImportedAsset of newlyImportedAssets) {
+    if(existingAssetFilenames.includes(newlyImportedAsset)) {
       // show error dialog stopping import if asset has conflicting names
-      dialog.showMessageBox({
-        type: "error",
-        title: "Error: no files were imported",
-        message: "An asset with the same filename has already been imported. " +
-        "Please rename the file you are trying to import, or delete the " +
-        "conflicting asset in the Media Browser to import this file."
-      });
+      dialogs.showAssetNameConflictsError();
 
       // sets assetWithSameNameExists to true
       return true;
