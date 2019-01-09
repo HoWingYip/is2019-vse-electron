@@ -120,8 +120,8 @@ video {
   display: flex;
   text-align: center;
   margin-bottom: 24px;
-  border-radius: 18px;
-  border: 5px dotted grey;
+  border-radius: 6px;
+  border: 2px solid grey;
   width: 100%;
   align-items: center;
 }
