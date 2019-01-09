@@ -26,7 +26,6 @@ tr {
 }
 
 table {
-  margin: 16px;
   width: 100%;
   border-radius: 2px;
 }
@@ -179,7 +178,6 @@ table#assets > tbody > tr > td::-webkit-scrollbar-thumb:active {
 }
 
 .video-container {
-  margin-top: 16px;
   height: 77%;
 }
 
@@ -213,7 +211,7 @@ table#assets > tbody > tr > td::-webkit-scrollbar-thumb:active {
 }
 
 .placeholder {
-  top: 40%;
+  top: calc(40% - 16px);
 }
 
 .placeholder-fullheight {
