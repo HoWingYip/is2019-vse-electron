@@ -46,6 +46,8 @@ table {
 
 .panel-focus {
   border: 2px solid #2196f3;
+  /* overrides default border-radius of 6px to make panel focus look more obvious */
+  border-radius: 0 !important;
 }
 
 .panel {
