@@ -132,7 +132,7 @@ table#assets {
   align-self: flex-start;
 }
 
-table#assets > tbody > tr > td {
+td.asset-tile {
   width: 25%;
   display: inline-block;
   height: 175px;
