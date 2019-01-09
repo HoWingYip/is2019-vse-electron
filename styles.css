@@ -116,7 +116,7 @@ video {
   margin-left: 16px;
 }
 
-.video-container, .fullheight-dotted-container {
+.video-container, .fullheight-container {
   display: flex;
   text-align: center;
   margin-bottom: 24px;
@@ -177,25 +177,25 @@ table#assets > tbody > tr > td::-webkit-scrollbar-thumb:active {
   height: 77%;
 }
 
-.fullheight-dotted-container {
+.fullheight-container {
   height: 100%;
   overflow: auto;
 }
 
-.fullheight-dotted-container::-webkit-scrollbar {
+.fullheight-container::-webkit-scrollbar {
   width: 5px;
 }
 
-.fullheight-dotted-container::-webkit-scrollbar-thumb {
+.fullheight-container::-webkit-scrollbar-thumb {
   background-color: grey;
   border-radius: 5px;
 }
 
-.fullheight-dotted-container::-webkit-scrollbar-thumb:hover {
+.fullheight-container::-webkit-scrollbar-thumb:hover {
   background-color: #969696;
 }
 
-.fullheight-dotted-container::-webkit-scrollbar-thumb:active {
+.fullheight-container::-webkit-scrollbar-thumb:active {
   background-color: #727272;
 }
 

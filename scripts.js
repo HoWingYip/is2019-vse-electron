@@ -17,7 +17,8 @@ ipcRenderer.on("importedAssetsSend", (_, newImportedFiles) => {
 });
 
 const noAssetsPlaceholder = document.getElementsByClassName("placeholder-fullheight")[0];
-const assetTableContainer = document.getElementsByClassName("fullheight-dotted-container")[0];
+const assetTableContainer = document.getElementsByClassName("fullheight-container")[0];
+const assetTable = document.querySelector("table#assets > tbody");
 
 ipcRenderer.on("displayImportInProgress", () => {
   // change "no assets imported" to "importing..."
