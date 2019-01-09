@@ -52,8 +52,13 @@ function showImportedAssets() {
     assetTableCell.title = asset.filename;
 
     // display asset in video player on double click
-    assetTableCell.ondblclick = () => {
-      displayAssetInPlayer(asset.filePath);
+    assetTableCell.ondblclick = (event) => {
+      // stops parent container from being notified about double-click
+      // and as such, stops import dialog from popping up
+      // when user only wants to display asset
+      event.stopPropagation();
+      // display asset
+      displayAssetInSourcePlayer(asset.filePath);
     };
 
     // create img element for thumbnail
