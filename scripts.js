@@ -113,7 +113,7 @@ function displayAssetInPlayer(assetPath) {
   sourceVideo.style.marginRight = "auto";
 
   const sourceVideoContainer = document.getElementsByClassName("video-container")[0];
-  // remove source video container's dotted border
+  // remove source video container's border
   sourceVideoContainer.style.border = "none";
 }
 
