@@ -51,12 +51,12 @@ ipcMain.on("importAssets", async (importedAssetsRequest) => {
 });
 
 function checkIfAssetNameConflicts(newlyImportedAssets) {
+  // get filenames of existing assets
   const existingAssetFilenames = importedFiles.map((asset) => asset.filePath);
   for(const newlyImportedAsset of newlyImportedAssets) {
     if(existingAssetFilenames.includes(newlyImportedAsset)) {
       // show error dialog stopping import if asset has conflicting names
       dialogs.showAssetNameConflictsError();
-
       // sets assetWithSameNameExists to true
       return true;
     }
