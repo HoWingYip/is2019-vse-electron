@@ -18,8 +18,8 @@
   },
   "homepage": "https://github.com/HoWingYip/is2019-vse-electron#readme",
   "devDependencies": {
-    "electron": "^3.0.13",
-    "eslint": "^5.10.0",
+    "electron": "^4.0.2",
+    "eslint": "^5.12.1",
     "eslint-config-google": "^0.11.0"
   },
   "dependencies": {
