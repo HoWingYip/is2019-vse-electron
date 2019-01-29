@@ -84,7 +84,7 @@ window.onload = () => {
 
   // show timeline video duration
   timelineVideo.addEventListener("durationchange", () => {
-    if(timelineVideo.duration < 60) {
+    if (timelineVideo.duration < 60) {
       timelineDurationIndicator.textContent = "0:" + Math.floor(timelineVideo.duration);
     } else if (timelineVideo.duration >= 60) {
       const timelineDurationMinutes = Math.floor(timelineVideo.duration / 60);
@@ -96,9 +96,9 @@ window.onload = () => {
 
   // update timeline current time indicator
   timelineVideo.addEventListener("timeupdate", () => {
-    if(timelineVideo.duration < 60) {
+    if (timelineVideo.duration < 60) {
       timelineCurrentTimeIndicator.textContent = "0:" + ("0" + Math.floor(timelineVideo.currentTime)).slice(-2); /* formats seconds value to 2 digits */
-    } else if(timelineVideo.duration >= 60) {
+    } else if (timelineVideo.duration >= 60) {
       const currentMinutes = Math.floor(timelineVideo.currentTime / 60);
       const currentSeconds = Math.floor(timelineVideo.currentTime - currentMinutes * 60);
       timelineCurrentTimeIndicator.textContent = currentMinutes + ":" + ("0" + Math.floor(currentSeconds)).slice(-2);
@@ -111,7 +111,7 @@ window.onload = () => {
 
   // show source video duration
   sourceVideo.addEventListener("durationchange", () => {
-    if(sourceVideo.duration < 60) {
+    if (sourceVideo.duration < 60) {
       sourceDurationIndicator.textContent = "0:" + Math.floor(sourceVideo.duration);
     } else if (sourceVideo.duration >= 60) {
       const sourceDurationMinutes = Math.floor(sourceVideo.duration / 60);
@@ -123,9 +123,9 @@ window.onload = () => {
 
   // update source current time indicator
   sourceVideo.addEventListener("timeupdate", () => {
-    if(sourceVideo.duration < 60) {
+    if (sourceVideo.duration < 60) {
       sourceCurrentTimeIndicator.textContent = "0:" + ("0" + Math.floor(sourceVideo.currentTime)).slice(-2); /* formats seconds value to 2 digits */
-    } else if(sourceVideo.duration >= 60) {
+    } else if (sourceVideo.duration >= 60) {
       const currentMinutes = Math.floor(sourceVideo.currentTime / 60);
       const currentSeconds = Math.floor(sourceVideo.currentTime - currentMinutes * 60);
       sourceCurrentTimeIndicator.textContent = currentMinutes + ":" + ("0" + Math.floor(currentSeconds)).slice(-2);
@@ -166,9 +166,9 @@ function timelinePlayPause() {
   const timelineVideo = document.getElementById("timeline-video");
 
   // play the video
-  if(timelineVideo.playing) {
+  if (timelineVideo.playing) {
     timelineVideo.pause();
-  } else if(timelineVideo.paused) {
+  } else if (timelineVideo.paused) {
     timelineVideo.play();
   }
 }
@@ -178,9 +178,9 @@ function sourcePlayPause() {
   const sourceVideo = document.getElementById("source-video");
 
   // play the video
-  if(sourceVideo.playing) {
+  if (sourceVideo.playing) {
     sourceVideo.pause();
-  } else if(sourceVideo.paused) {
+  } else if (sourceVideo.paused) {
     sourceVideo.play();
   }
 }

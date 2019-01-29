@@ -11,7 +11,7 @@ ipcRenderer.on("importedAssetsSend", (_, newImportedFiles) => {
   importedFiles = newImportedFiles;
   console.log(newImportedFiles);
   // if there are imported assets, display them!
-  if(importedFiles.length > 0) {
+  if (importedFiles.length > 0) {
     showImportedAssets();
   }
 });
@@ -42,7 +42,7 @@ function showImportedAssets() {
   // clear table before re-displaying all assets
   assetTable.innerHTML = "";
   // display the damn assets already!
-  for(const asset of importedFiles) {
+  for (const asset of importedFiles) {
     // create table cell to contain asset
     const assetTableCell = document.createElement("td");
     assetTableCell.className = "asset-tile";
@@ -78,7 +78,7 @@ function showImportedAssets() {
     const assetRow = document.createElement("tr");
     assetRow.className = "video-row";
     // if asset will be first in row, add new row
-    if(importedFiles.indexOf(asset) % 4 === 0) {
+    if (importedFiles.indexOf(asset) % 4 === 0) {
       assetRow.appendChild(assetTableCell);
       assetTable.appendChild(assetRow);
     } else {
@@ -124,12 +124,12 @@ document.addEventListener("click", (event) => {
   const panels = document.getElementsByClassName("panel");
 
   function removeFocusAllPanels() {
-    for(const panel of panels) {
+    for (const panel of panels) {
       panel.classList.remove("panel-focus");
     }
   }
 
-  if(event.target.closest(".panel")) {
+  if (event.target.closest(".panel")) {
     // if clicked region has a panel as nth-level ancestor:
     removeFocusAllPanels();
     // ...and focus that panel
@@ -146,7 +146,7 @@ document.addEventListener("click", (event) => {
   const assetTiles = document.getElementsByClassName("asset-tile");
 
   function removeFocusAllTiles() {
-    for(const tile of assetTiles) {
+    for (const tile of assetTiles) {
       tile.classList.remove("asset-tile-focus");
     }
   }
@@ -156,10 +156,10 @@ document.addEventListener("click", (event) => {
     tileToFocus.classList.add("asset-tile-focus");
   }
 
-  if(event.target.closest(".asset-tile")) {
+  if (event.target.closest(".asset-tile")) {
     // if click was within a tile...
 
-    if(!event.ctrlKey && !event.shiftKey) {
+    if (!event.ctrlKey && !event.shiftKey) {
       // no multi-selection
 
       // deselect all tiles
@@ -167,18 +167,18 @@ document.addEventListener("click", (event) => {
       // select the clicked one
       singleTileSelect();
 
-    } else if(event.ctrlKey) {
+    } else if (event.ctrlKey) {
       // ctrl key was down: multi-selection
 
       // add clicked tile to selection
       singleTileSelect();
 
-    } else if(event.shiftKey) {
+    } else if (event.shiftKey) {
       // shift key was down: multi-selection
 
       // if no tiles have been selected, treat this like a normal selection
       // otherwise, "Uncaught TypeError: Cannot read property 'classList' of undefined" is thrown
-      if(selectedFiles.length === 0) {
+      if (selectedFiles.length === 0) {
         singleTileSelect();
         return;
       }
@@ -191,14 +191,14 @@ document.addEventListener("click", (event) => {
       const firstFocusedAsset = document.getElementsByClassName("asset-tile-focus")[0];
       const firstFocusedAssetIndex = [...assetTiles].indexOf(firstFocusedAsset);
 
-      if(clickedAssetIndex < firstFocusedAssetIndex) {
-        for(let tileNumberToFocus = clickedAssetIndex; tileNumberToFocus < firstFocusedAssetIndex; tileNumberToFocus++) {
+      if (clickedAssetIndex < firstFocusedAssetIndex) {
+        for (let tileNumberToFocus = clickedAssetIndex; tileNumberToFocus < firstFocusedAssetIndex; tileNumberToFocus++) {
           // selects every tile from clicked tile UP to currently focused tile
           // (if clicked tile comes before currently focused tile)
           assetTiles[tileNumberToFocus].classList.add("asset-tile-focus");
         }
-      } else if(firstFocusedAssetIndex < clickedAssetIndex) {
-        for(let tileNumberToFocus = firstFocusedAssetIndex; tileNumberToFocus < clickedAssetIndex + 1; tileNumberToFocus++) {
+      } else if (firstFocusedAssetIndex < clickedAssetIndex) {
+        for (let tileNumberToFocus = firstFocusedAssetIndex; tileNumberToFocus < clickedAssetIndex + 1; tileNumberToFocus++) {
           // selects every tile from currently focused tile UP to clicked tile
           // (if currently focused tile comes before clicked tile)
           // clickedAssetIndex + 1 is to select all tiles up to AND INCLUDING the clicked one
@@ -224,7 +224,7 @@ document.addEventListener("keydown", (event) => {
   const leftVideoPanel = document.getElementsByClassName("video-panel")[0];
 
   // checks for Ctrl-A
-  if(event.ctrlKey && event.key === "a"
+  if (event.ctrlKey && event.key === "a"
     // checks that left panel is focused
     && leftVideoPanel.classList.contains("panel-focus")
     // checks that left panel is displaying media browser
@@ -232,7 +232,7 @@ document.addEventListener("keydown", (event) => {
     && mediaSwitcher.classList.contains("panel-switcher-enabled")) {
 
     const assetTiles = document.getElementsByClassName("asset-tile");
-    for(const tile of assetTiles) {
+    for (const tile of assetTiles) {
       tile.classList.add("asset-tile-focus");
     }
 

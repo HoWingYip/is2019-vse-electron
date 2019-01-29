@@ -10,7 +10,7 @@
         "spaced-comment": ["warn", "always"],
         "max-len": "off",
         "comma-dangle": ["warn", "never"],
-        "keyword-spacing": "off",
+        "keyword-spacing": "warn",
         "new-cap": "off",
         "require-jsdoc": "off",
         "semi": "warn",

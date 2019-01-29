@@ -15,15 +15,15 @@ ipcMain.on("importAssets", async (importedAssetsRequest) => {
   try {
     // check that import was not cancelled
     // to avoid throwing "files is not iterable"
-    if(files !== undefined) {
+    if (files !== undefined) {
       // change "no assets imported" to "importing..."
       importedAssetsRequest.sender.send("displayImportInProgress");
 
       // check if asset(s) with same name exist(s)
       const assetWithSameNameExists = checkIfAssetNameConflicts(files);
 
-      for(const filePath of files) {
-        if(!assetWithSameNameExists) {
+      for (const filePath of files) {
+        if (!assetWithSameNameExists) {
           // add files to list of imported files
           // TODO: display import progress ("Importing file _ of _")
           importedFiles.push({
@@ -36,7 +36,7 @@ ipcMain.on("importAssets", async (importedAssetsRequest) => {
         }
       }
 
-      if(!assetWithSameNameExists) {
+      if (!assetWithSameNameExists) {
         // put concurrent thumbnail generation code here
         // edit thumbnail function to accept whole files array
         // await returned Promise before displaying assets
@@ -45,7 +45,7 @@ ipcMain.on("importAssets", async (importedAssetsRequest) => {
       // notify ipcRenderer of file import
       importedAssetsRequest.sender.send("importedAssetsSend", importedFiles);
     }
-  } catch(e) {
+  } catch (e) {
     console.error(e);
   }
 });
@@ -53,8 +53,8 @@ ipcMain.on("importAssets", async (importedAssetsRequest) => {
 function checkIfAssetNameConflicts(newlyImportedAssets) {
   // get filenames of existing assets
   const existingAssetFilenames = importedFiles.map((asset) => asset.filePath);
-  for(const newlyImportedAsset of newlyImportedAssets) {
-    if(existingAssetFilenames.includes(newlyImportedAsset)) {
+  for (const newlyImportedAsset of newlyImportedAssets) {
+    if (existingAssetFilenames.includes(newlyImportedAsset)) {
       // show error dialog stopping import if asset has conflicting names
       dialogs.showAssetNameConflictsError();
       // sets assetWithSameNameExists to true
@@ -71,7 +71,7 @@ function storeMetadata(path) {
   return new Promise((resolve, reject) => {
     const ffmpegProcess = new ffmpeg(path);
     ffmpegProcess.ffprobe((err, metadata) => {
-      if(err) reject(Error(err));
+      if (err) reject(Error(err));
       resolve(metadata);
     });
   });
@@ -81,7 +81,7 @@ function storeHash(path) {
   return new Promise((resolve, reject) => {
     const ffmpegProcess = new ffmpeg(path);
     ffmpegProcess.ffprobe((err, metadata) => {
-      if(err) reject(Error(err));
+      if (err) reject(Error(err));
       const hash = hasha(JSON.stringify(metadata));
       resolve(hash);
     });
@@ -104,8 +104,8 @@ function extractThumbnail(path) {
       resolve(thumbnailPath);
     }).on("error", (err, stdout, stderr) => {
       console.error(err);
-      if(stderr) console.error(`FFmpeg encountered an error:\n${stderr}\n\n`);
-      if(stdout) console.error(`FFmpeg output:\n${stdout}\n\n`);
+      if (stderr) console.error(`FFmpeg encountered an error:\n${stderr}\n\n`);
+      if (stdout) console.error(`FFmpeg output:\n${stdout}\n\n`);
       reject(Error(err));
     }).screenshots({
       // random timestamp for thumbnail
