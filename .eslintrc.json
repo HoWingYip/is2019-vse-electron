@@ -9,7 +9,10 @@
         "linebreak-style": ["error", "windows"],
         "spaced-comment": ["warn", "always"],
         "max-len": "off",
-        "comma-dangle": ["warn", "never"],
+        "comma-dangle": ["warn", {
+            "arrays": "never",
+            "objects": "always-multiline"
+        }],
         "keyword-spacing": "warn",
         "new-cap": "off",
         "require-jsdoc": "off",
