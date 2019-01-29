@@ -6,7 +6,7 @@ Object.defineProperty(HTMLMediaElement.prototype, "playing", {
       && !this.paused
       && !this.ended
       && this.readyState > 2);
-  }
+  },
 });
 
 window.onload = () => {
@@ -135,33 +135,33 @@ window.onload = () => {
 
 /* skip to start functions */
 
-function timelineSkipToStart() {
+const timelineSkipToStart = () => {
   const timelineVideo = document.getElementById("timeline-video");
 
   timelineVideo.pause();
   timelineVideo.currentTime = 0;
-}
+};
 
-function sourceSkipToStart() {
+const sourceSkipToStart = () => {
   const sourceVideo = document.getElementById("source-video");
 
   sourceVideo.pause();
   sourceVideo.currentTime = 0;
-}
+};
 
 /* skip 10 frames back functions */
 
-function timelineSkipTenBack() {
+const timelineSkipTenBack = () => {
 
-}
+};
 
-function sourceSkipTenBack() {
+const sourceSkipTenBack = () => {
 
-}
+};
 
 /* play/pause functions */
 
-function timelinePlayPause() {
+const timelinePlayPause = () => {
   // initialise video element as JS var
   const timelineVideo = document.getElementById("timeline-video");
 
@@ -171,9 +171,9 @@ function timelinePlayPause() {
   } else if (timelineVideo.paused) {
     timelineVideo.play();
   }
-}
+};
 
-function sourcePlayPause() {
+const sourcePlayPause = () => {
   // initialise video element as JS var
   const sourceVideo = document.getElementById("source-video");
 
@@ -183,30 +183,30 @@ function sourcePlayPause() {
   } else if (sourceVideo.paused) {
     sourceVideo.play();
   }
-}
+};
 
 /* fast-forward function */
 
-function timelineSkipTenForward() {
+const timelineSkipTenForward = () => {
 
-}
+};
 
-function sourceSkipTenForward() {
+const sourceSkipTenForward = () => {
 
-}
+};
 
 /* skip to end functions */
 
-function timelineSkipToEnd() {
+const timelineSkipToEnd = () => {
   const timelineVideo = document.getElementById("timeline-video");
 
   timelineVideo.pause();
   timelineVideo.currentTime = timelineVideo.duration;
-}
+};
 
-function sourceSkipToEnd() {
+const sourceSkipToEnd = () => {
   const sourceVideo = document.getElementById("source-video");
 
   sourceVideo.pause();
   sourceVideo.currentTime = sourceVideo.duration;
-}
+};

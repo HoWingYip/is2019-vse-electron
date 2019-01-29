@@ -5,7 +5,7 @@ const sourceSwitcher = document.getElementById("switchSource");
 const mediaSwitcher = document.getElementById("switchMedia");
 
 // switch to source panel in div.video-panel
-function switchSource() {
+const switchSource = () => {
   // display source video container
   sourcePanelContainer.style.display = "inline-block";
   // hide media browser
@@ -15,10 +15,10 @@ function switchSource() {
   sourceSwitcher.classList.add("panel-switcher-enabled");
   // disable media switcher
   mediaSwitcher.classList.remove("panel-switcher-enabled");
-}
+};
 
 // switch to media panel in div.video-panel
-function switchMedia() {
+const switchMedia = () => {
   // hide source video container
   sourcePanelContainer.style.display = "none";
   // display media browser
@@ -28,4 +28,4 @@ function switchMedia() {
   sourceSwitcher.classList.remove("panel-switcher-enabled");
   // enable media switcher
   mediaSwitcher.classList.add("panel-switcher-enabled");
-}
+};

@@ -1,6 +1,6 @@
 const {dialog} = require("electron");
 
-function showImportDialog() {
+const showImportDialog = () => {
   return dialog.showOpenDialog({
     title: "Import",
     defaultPath: "~/",
@@ -11,21 +11,21 @@ function showImportDialog() {
       {name: "Audio Files", extensions: ["wav", "mp3", "webm", "aac", "flac", "m4a", "ogg", "oga", "opus"]},
       {name: "Image Files", extensions: ["png", "jpg", "jpeg", "bmp", "gif", "webp"]}
     ],
-    properties: ["openFile", "multiSelections"]
+    properties: ["openFile", "multiSelections"],
   });
-}
+};
 
-function showAssetNameConflictsError() {
+const showAssetNameConflictsError = () => {
   dialog.showMessageBox({
     type: "error",
     title: "Error: no files were imported",
     message: "An asset with the same filename has already been imported. " +
     "Please rename the file you are trying to import, or delete the " +
-    "conflicting asset in the Media Browser to import this file."
+    "conflicting asset in the Media Browser to import this file.",
   });
-}
+};
 
 module.exports = {
   showImportDialog,
-  showAssetNameConflictsError
+  showAssetNameConflictsError,
 };

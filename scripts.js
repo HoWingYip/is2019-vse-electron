@@ -3,9 +3,9 @@ const {ipcRenderer} = require("electron");
 let importedFiles = [];
 let selectedFiles = [];
 
-function importAssets() {
+const importAssets = () => {
   ipcRenderer.send("importAssets");
-}
+};
 
 ipcRenderer.on("importedAssetsSend", (_, newImportedFiles) => {
   importedFiles = newImportedFiles;
@@ -29,7 +29,7 @@ ipcRenderer.on("displayImportInProgress", () => {
   assetTableContainer.ondblclick = importAssets;
 });
 
-function showImportedAssets() {
+const showImportedAssets = () => {
   // hide the "no assets imported" placeholder
   noAssetsPlaceholder.style.display = "none";
   // hide border of table container
@@ -88,7 +88,7 @@ function showImportedAssets() {
       document.getElementsByClassName("video-row")[rowNumber].appendChild(assetTableCell);
     }
   }
-}
+};
 
 /* display assets in video player function */
 
@@ -123,11 +123,11 @@ function displayAssetInSourcePlayer(assetPath) {
 document.addEventListener("click", (event) => {
   const panels = document.getElementsByClassName("panel");
 
-  function removeFocusAllPanels() {
+  const removeFocusAllPanels = () => {
     for (const panel of panels) {
       panel.classList.remove("panel-focus");
     }
-  }
+  };
 
   if (event.target.closest(".panel")) {
     // if clicked region has a panel as nth-level ancestor:
@@ -145,16 +145,16 @@ document.addEventListener("click", (event) => {
 document.addEventListener("click", (event) => {
   const assetTiles = document.getElementsByClassName("asset-tile");
 
-  function removeFocusAllTiles() {
+  const removeFocusAllTiles = () => {
     for (const tile of assetTiles) {
       tile.classList.remove("asset-tile-focus");
     }
-  }
+  };
 
-  function singleTileSelect() {
+  const singleTileSelect = () => {
     const tileToFocus = event.target.closest(".asset-tile");
     tileToFocus.classList.add("asset-tile-focus");
-  }
+  };
 
   if (event.target.closest(".asset-tile")) {
     // if click was within a tile...
